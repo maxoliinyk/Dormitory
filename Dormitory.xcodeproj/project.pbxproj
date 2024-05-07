@@ -11,6 +11,7 @@
 		C49ED22D2BEA864C0041CBE1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49ED22C2BEA864C0041CBE1 /* ContentView.swift */; };
 		C49ED22F2BEA864E0041CBE1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C49ED22E2BEA864E0041CBE1 /* Assets.xcassets */; };
 		C49ED2322BEA864E0041CBE1 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C49ED2312BEA864E0041CBE1 /* Preview Assets.xcassets */; };
+		C49ED2392BEA86640041CBE1 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49ED2382BEA86640041CBE1 /* LoginView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +20,7 @@
 		C49ED22C2BEA864C0041CBE1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		C49ED22E2BEA864E0041CBE1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C49ED2312BEA864E0041CBE1 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		C49ED2382BEA86640041CBE1 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +55,7 @@
 			children = (
 				C49ED22A2BEA864C0041CBE1 /* DormitoryApp.swift */,
 				C49ED22C2BEA864C0041CBE1 /* ContentView.swift */,
+				C49ED2382BEA86640041CBE1 /* LoginView.swift */,
 				C49ED22E2BEA864E0041CBE1 /* Assets.xcassets */,
 				C49ED2302BEA864E0041CBE1 /* Preview Content */,
 			);
@@ -137,6 +140,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C49ED2392BEA86640041CBE1 /* LoginView.swift in Sources */,
 				C49ED22D2BEA864C0041CBE1 /* ContentView.swift in Sources */,
 				C49ED22B2BEA864C0041CBE1 /* DormitoryApp.swift in Sources */,
 			);
