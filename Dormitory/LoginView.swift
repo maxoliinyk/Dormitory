@@ -8,8 +8,41 @@
 import SwiftUI
 
 struct LoginView: View {
+    @State private var username = ""
+    @State private var password = ""
+    
+    private var isLoginButtonDisabled: Bool {
+        username.isEmpty || password.isEmpty
+    }
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            Text("Welcome!")
+                .font(.title.bold())
+            
+            // TextFields
+            VStack {
+                TextField("Username", text: $username)
+                SecureField("Password", text: $password)
+            }
+            .textFieldStyle(.roundedBorder)
+            .padding()
+            
+            Button("Login") {
+                print(
+                    """
+                    username: \(username)
+                    password: \(password)
+                    """
+                )
+            }
+            .frame(width: 250, height: 50)
+            .font(.title2.bold())
+            .foregroundStyle(.primary)
+            .background(Color(.systemBlue))
+            .clipShape(RoundedRectangle(cornerRadius: 15))
+            .disabled(isLoginButtonDisabled)
+        }
     }
 }
 
