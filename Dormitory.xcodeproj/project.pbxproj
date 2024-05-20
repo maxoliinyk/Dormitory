@@ -54,7 +54,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		C45A95DD2BF5DDBD0048B93B /* Authentification */ = {
+		C45A95DD2BF5DDBD0048B93B /* Authentication */ = {
 			isa = PBXGroup;
 			children = (
 				C45A95E62BF6877F0048B93B /* RootView.swift */,
@@ -63,7 +63,7 @@
 				C45A95E82BF6905D0048B93B /* SettingsView.swift */,
 				C45A95E42BF646D20048B93B /* AuthManager.swift */,
 			);
-			path = Authentification;
+			path = Authentication;
 			sourceTree = "<group>";
 		};
 		C49ED21E2BEA864C0041CBE1 = {
@@ -87,7 +87,7 @@
 			children = (
 				C49ED22A2BEA864C0041CBE1 /* DormitoryApp.swift */,
 				C49ED22C2BEA864C0041CBE1 /* ContentView.swift */,
-				C45A95DD2BF5DDBD0048B93B /* Authentification */,
+				C45A95DD2BF5DDBD0048B93B /* Authentication */,
 				C49ED23A2BEA891A0041CBE1 /* GoogleService-Info.plist */,
 				C49ED22E2BEA864E0041CBE1 /* Assets.xcassets */,
 				C49ED2302BEA864E0041CBE1 /* Preview Content */,
