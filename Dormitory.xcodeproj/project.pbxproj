@@ -17,6 +17,8 @@
 		C45CC6B52BFCBD8400A19317 /* SignUpEmailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45CC6B42BFCBD8400A19317 /* SignUpEmailViewModel.swift */; };
 		C45CC6B82BFCBDF400A19317 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45CC6B72BFCBDF400A19317 /* ProfileView.swift */; };
 		C45CC6BB2BFCC20000A19317 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45CC6BA2BFCC20000A19317 /* UserManager.swift */; };
+		C465B50A2BFCED120059CF12 /* CustomModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C465B5092BFCED120059CF12 /* CustomModifiers.swift */; };
+		C465B50E2BFCED700059CF12 /* LogInEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C465B50D2BFCED700059CF12 /* LogInEmailView.swift */; };
 		C46FCBCC2BF38BA0007B6E18 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = C46FCBCB2BF38BA0007B6E18 /* FirebaseAnalytics */; };
 		C46FCBCE2BF38BA0007B6E18 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C46FCBCD2BF38BA0007B6E18 /* FirebaseAnalyticsSwift */; };
 		C46FCBD02BF38BA0007B6E18 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = C46FCBCF2BF38BA0007B6E18 /* FirebaseAuth */; };
@@ -40,6 +42,8 @@
 		C45CC6B42BFCBD8400A19317 /* SignUpEmailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpEmailViewModel.swift; sourceTree = "<group>"; };
 		C45CC6B72BFCBDF400A19317 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		C45CC6BA2BFCC20000A19317 /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
+		C465B5092BFCED120059CF12 /* CustomModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomModifiers.swift; sourceTree = "<group>"; };
+		C465B50D2BFCED700059CF12 /* LogInEmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInEmailView.swift; sourceTree = "<group>"; };
 		C49ED2272BEA864C0041CBE1 /* Dormitory.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dormitory.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C49ED22A2BEA864C0041CBE1 /* DormitoryApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DormitoryApp.swift; sourceTree = "<group>"; };
 		C49ED22C2BEA864C0041CBE1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -107,6 +111,7 @@
 			children = (
 				C45A95DE2BF5DF3A0048B93B /* SignUpEmailView.swift */,
 				C45CC6B42BFCBD8400A19317 /* SignUpEmailViewModel.swift */,
+				C465B50D2BFCED700059CF12 /* LogInEmailView.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -125,6 +130,14 @@
 				C45CC6BA2BFCC20000A19317 /* UserManager.swift */,
 			);
 			path = Firestore;
+			sourceTree = "<group>";
+		};
+		C465B5082BFCECF30059CF12 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				C465B5092BFCED120059CF12 /* CustomModifiers.swift */,
+			);
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 		C49ED21E2BEA864C0041CBE1 = {
@@ -146,6 +159,7 @@
 		C49ED2292BEA864C0041CBE1 /* Dormitory */ = {
 			isa = PBXGroup;
 			children = (
+				C465B5082BFCECF30059CF12 /* Utilities */,
 				C49ED22A2BEA864C0041CBE1 /* DormitoryApp.swift */,
 				C49ED22C2BEA864C0041CBE1 /* ContentView.swift */,
 				C45CC6AC2BFCBC2000A19317 /* Core */,
@@ -250,11 +264,13 @@
 				C45A95E92BF6905D0048B93B /* SettingsView.swift in Sources */,
 				C45A95E12BF5DFBB0048B93B /* AuthView.swift in Sources */,
 				C49ED22D2BEA864C0041CBE1 /* ContentView.swift in Sources */,
+				C465B50E2BFCED700059CF12 /* LogInEmailView.swift in Sources */,
 				C45A95E72BF6877F0048B93B /* RootView.swift in Sources */,
 				C49ED22B2BEA864C0041CBE1 /* DormitoryApp.swift in Sources */,
 				C45CC6B52BFCBD8400A19317 /* SignUpEmailViewModel.swift in Sources */,
 				C45CC6BB2BFCC20000A19317 /* UserManager.swift in Sources */,
 				C45A95DF2BF5DF3A0048B93B /* SignUpEmailView.swift in Sources */,
+				C465B50A2BFCED120059CF12 /* CustomModifiers.swift in Sources */,
 				C45CC6B22BFCBCDC00A19317 /* AuthenticationViewModel.swift in Sources */,
 				C45A95E52BF646D20048B93B /* AuthManager.swift in Sources */,
 				C45CC6B82BFCBDF400A19317 /* ProfileView.swift in Sources */,
