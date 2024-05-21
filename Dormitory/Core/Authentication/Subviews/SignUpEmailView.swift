@@ -38,14 +38,14 @@ struct SignUpEmailView: View {
                         print("Error: \(error)")
                     }
                     
-                    do {
-                        try await viewModel.signIn()
-                        print("Successful log in!")
-                        showSignUpView = false
-                        return
-                    } catch {
-                        print("Error: \(error)")
-                    }
+//                    do {
+//                        try await viewModel.signIn()
+//                        print("Successful log in!")
+//                        showSignUpView = false
+//                        return
+//                    } catch {
+//                        print("Error: \(error)")
+//                    }
                 }
             } label: {
                 Text("Sign Up")
@@ -62,21 +62,6 @@ struct SignUpEmailView: View {
         .navigationTitle("Sign Up With Email")
         .textInputAutocapitalization(.never)
         
-    }
-}
-
-struct ModifiedTextField: ViewModifier {
-    func body(content: Content) -> some View {
-        content
-            .padding()
-            .background(Color.gray.opacity(0.4))
-            .cornerRadius(10)
-    }
-}
-
-extension View {
-    func modifiedField() -> some View {
-        modifier(ModifiedTextField())
     }
 }
 

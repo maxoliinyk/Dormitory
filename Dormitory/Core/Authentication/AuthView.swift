@@ -14,9 +14,9 @@ struct AuthView: View {
     var body: some View {
         VStack {
             NavigationLink {
-                SignUpEmailView(showSignUpView: $showSignUpView)
+                LogInEmailView(showSignUpView: $showSignUpView)
             } label: {
-                Text("Sign Up With Email")
+                Text("Continue With Email")
                     .font(.headline)
                     .foregroundStyle(.white)
                     .frame(height: 55)
@@ -28,7 +28,7 @@ struct AuthView: View {
             Spacer()
         }
         .padding()
-        .navigationTitle("Sign Up")
+        .navigationTitle("Ласкаво просимо!")
     }
 }
 
