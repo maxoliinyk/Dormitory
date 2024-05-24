@@ -11,6 +11,7 @@ struct SettingsView: View {
 
     @StateObject private var viewModel = SettingsViewModel()
     @Binding var showSignUpView: Bool
+    @Environment(\.dismiss) var dismiss
     
     var body: some View {
         List {
@@ -37,6 +38,11 @@ struct SettingsView: View {
             }
         }
         .navigationTitle("Settings")
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button("Done") { dismiss() }
+            }
+        }
     }
 }
 
