@@ -1,0 +1,28 @@
+{
+    "notifications": [
+        {
+            "notificationID": "notification1",
+            "dormitoryID": "dormitory1",
+            "title": "Оголошення 1",
+            "content": "Тестове оголошення",
+            "postedBy": "Admin",
+            "date": "2024-05-20"
+        },
+        {
+            "notificationID": "notification2",
+            "dormitoryID": "dormitory2",
+            "title": "Оголошення 2",
+            "content": "Тестове оголошення 2",
+            "postedBy": "Admin",
+            "date": "2024-05-20"
+        },
+        {
+            "notificationID": "notification3",
+            "dormitoryID": "dormitory3",
+            "title": "Оголошення 3",
+            "content": "Тестове оголошення 3",
+            "postedBy": "Admin",
+            "date": "2024-05-20"
+        }
+    ]
+}
