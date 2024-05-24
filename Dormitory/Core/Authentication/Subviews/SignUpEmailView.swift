@@ -16,14 +16,23 @@ struct SignUpEmailView: View {
         VStack {
             TextField("Email...", text: $viewModel.email)
                 .modifiedField()
+                .textInputAutocapitalization(.never)
             SecureField("Password...", text: $viewModel.password)
                 .modifiedField()
+                .textInputAutocapitalization(.never)
             TextField("Name...", text: $viewModel.name)
                 .modifiedField()
             TextField("Last name...", text: $viewModel.lastName)
                 .modifiedField()
-            TextField("Dormitory number...", text: $viewModel.dormitoryNumber)
-                .modifiedField()
+            Picker("Гуртожиток", selection: $viewModel.dormitoryID) {
+                    ForEach(DormitoryIDs.allCases) { dormitory in
+                        Text(dormitory.displayName).tag(dormitory)
+                    }
+            }
+            .pickerStyle(.menu)
+            .frame(maxWidth: .infinity)
+            .modifiedField()
+            
             TextField("Room number...", text: $viewModel.roomNumber)
                 .modifiedField()
             
@@ -37,15 +46,6 @@ struct SignUpEmailView: View {
                     } catch {
                         print("Error: \(error)")
                     }
-                    
-//                    do {
-//                        try await viewModel.signIn()
-//                        print("Successful log in!")
-//                        showSignUpView = false
-//                        return
-//                    } catch {
-//                        print("Error: \(error)")
-//                    }
                 }
             } label: {
                 Text("Sign Up")
@@ -60,8 +60,6 @@ struct SignUpEmailView: View {
         }
         .padding()
         .navigationTitle("Sign Up With Email")
-        .textInputAutocapitalization(.never)
-        
     }
 }
 

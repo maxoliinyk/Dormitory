@@ -57,7 +57,6 @@ struct LogInEmailView: View {
         .padding()
         .navigationTitle("Sign Up With Email")
         .textInputAutocapitalization(.never)
-        
     }
 }
 
