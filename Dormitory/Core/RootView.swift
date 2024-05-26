@@ -11,22 +11,21 @@ struct RootView: View {
     
     @State private var showSignUpView = false
     @State private var isAdmin = false
+    @State private var dormitoryID: String? // Store the dormitoryID here
     @State private var isLoading = true // Added loading state
     
     var body: some View {
         ZStack {
             NavigationStack {
-//                DormitoriesView()
                 if isLoading {
                     ProgressView("Loading...") // Show a loading indicator while fetching user data
                 } else {
                     if isAdmin {
                         AdminNotificationView(showSignUpView: $showSignUpView)
                     } else {
-                        UserNotificationView(showSignUpView: $showSignUpView)
+                        UserNotificationView(showSignUpView: $showSignUpView, dormitoryID: dormitoryID ?? "dormitory1") // Pass dormitoryID
                     }
                 }
-//                ProfileView(showSignUpView: $showSignUpView)
             }
         }
         .onAppear() {
@@ -36,7 +35,7 @@ struct RootView: View {
         }
         .fullScreenCover(isPresented: $showSignUpView) {
             NavigationStack {
-                AuthView(showSignUpView: $showSignUpView)
+                LogInEmailView(showSignUpView: $showSignUpView)
             }
         }
     }
@@ -46,6 +45,7 @@ struct RootView: View {
             let authUser = try AuthManager.shared.getAuthenticatedUser()
             let dbUser = try await UserManager.shared.getUser(userID: authUser.uid)
             self.isAdmin = dbUser.isAdmin
+            self.dormitoryID = dbUser.dormitoryID // Assign dormitoryID from the fetched user data
         } catch {
             print("Error fetching user data: \(error.localizedDescription)")
             self.showSignUpView = true
@@ -57,3 +57,4 @@ struct RootView: View {
 #Preview {
     RootView()
 }
+
