@@ -16,6 +16,9 @@
 		C4477EC42C00F69800600F57 /* UserNotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4477EC32C00F69800600F57 /* UserNotificationView.swift */; };
 		C4477EC72C00F9AD00600F57 /* NotificationRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4477EC62C00F9AD00600F57 /* NotificationRow.swift */; };
 		C4477EC92C01015A00600F57 /* NotificationsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4477EC82C01015A00600F57 /* NotificationsViewModel.swift */; };
+		C4477ECD2C01CF8500600F57 /* RequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4477ECC2C01CF8500600F57 /* RequestManager.swift */; };
+		C4477ED02C02026300600F57 /* RequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4477ECF2C02026300600F57 /* RequestView.swift */; };
+		C457FE5C2C032B67002DE4EF /* DormitoryEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = C457FE5B2C032B67002DE4EF /* DormitoryEnums.swift */; };
 		C45A95DF2BF5DF3A0048B93B /* SignUpEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45A95DE2BF5DF3A0048B93B /* SignUpEmailView.swift */; };
 		C45A95E12BF5DFBB0048B93B /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45A95E02BF5DFBB0048B93B /* AuthView.swift */; };
 		C45A95E52BF646D20048B93B /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45A95E42BF646D20048B93B /* AuthManager.swift */; };
@@ -28,9 +31,8 @@
 		C45CC6BB2BFCC20000A19317 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45CC6BA2BFCC20000A19317 /* UserManager.swift */; };
 		C465B50A2BFCED120059CF12 /* CustomModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C465B5092BFCED120059CF12 /* CustomModifiers.swift */; };
 		C465B50E2BFCED700059CF12 /* LogInEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C465B50D2BFCED700059CF12 /* LogInEmailView.swift */; };
-		C465B5102BFD29D30059CF12 /* DormitoriesDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C465B50F2BFD29D30059CF12 /* DormitoriesDatabase.swift */; };
+		C465B5102BFD29D30059CF12 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = C465B50F2BFD29D30059CF12 /* Database.swift */; };
 		C465B5122BFD2D6E0059CF12 /* dormitories.json in Resources */ = {isa = PBXBuildFile; fileRef = C465B5112BFD2D6E0059CF12 /* dormitories.json */; };
-		C465B5152BFD2DA60059CF12 /* DormitoriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C465B5142BFD2DA60059CF12 /* DormitoriesView.swift */; };
 		C465B5172BFD30480059CF12 /* DormitoriesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C465B5162BFD30480059CF12 /* DormitoriesManager.swift */; };
 		C46FCBCC2BF38BA0007B6E18 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = C46FCBCB2BF38BA0007B6E18 /* FirebaseAnalytics */; };
 		C46FCBCE2BF38BA0007B6E18 /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C46FCBCD2BF38BA0007B6E18 /* FirebaseAnalyticsSwift */; };
@@ -38,10 +40,13 @@
 		C46FCBD22BF38BA0007B6E18 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = C46FCBD12BF38BA0007B6E18 /* FirebaseFirestore */; };
 		C46FCBD42BF38BA0007B6E18 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C46FCBD32BF38BA0007B6E18 /* FirebaseFirestoreSwift */; };
 		C49ED22B2BEA864C0041CBE1 /* DormitoryApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49ED22A2BEA864C0041CBE1 /* DormitoryApp.swift */; };
-		C49ED22D2BEA864C0041CBE1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49ED22C2BEA864C0041CBE1 /* ContentView.swift */; };
 		C49ED22F2BEA864E0041CBE1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C49ED22E2BEA864E0041CBE1 /* Assets.xcassets */; };
 		C49ED2322BEA864E0041CBE1 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C49ED2312BEA864E0041CBE1 /* Preview Assets.xcassets */; };
 		C49ED23B2BEA891B0041CBE1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C49ED23A2BEA891A0041CBE1 /* GoogleService-Info.plist */; };
+		C4CA590E2C020D4400B53241 /* RequestRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CA590D2C020D4400B53241 /* RequestRow.swift */; };
+		C4CA59102C020D7200B53241 /* RequestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CA590F2C020D7200B53241 /* RequestViewModel.swift */; };
+		C4CA59122C020F0400B53241 /* NewRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CA59112C020F0400B53241 /* NewRequestView.swift */; };
+		C4CA59142C021B9400B53241 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CA59132C021B9400B53241 /* ProfileViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +59,9 @@
 		C4477EC32C00F69800600F57 /* UserNotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNotificationView.swift; sourceTree = "<group>"; };
 		C4477EC62C00F9AD00600F57 /* NotificationRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationRow.swift; sourceTree = "<group>"; };
 		C4477EC82C01015A00600F57 /* NotificationsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewModel.swift; sourceTree = "<group>"; };
+		C4477ECC2C01CF8500600F57 /* RequestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestManager.swift; sourceTree = "<group>"; };
+		C4477ECF2C02026300600F57 /* RequestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestView.swift; sourceTree = "<group>"; };
+		C457FE5B2C032B67002DE4EF /* DormitoryEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DormitoryEnums.swift; sourceTree = "<group>"; };
 		C45A95DE2BF5DF3A0048B93B /* SignUpEmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpEmailView.swift; sourceTree = "<group>"; };
 		C45A95E02BF5DFBB0048B93B /* AuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
 		C45A95E42BF646D20048B93B /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
@@ -66,16 +74,18 @@
 		C45CC6BA2BFCC20000A19317 /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
 		C465B5092BFCED120059CF12 /* CustomModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomModifiers.swift; sourceTree = "<group>"; };
 		C465B50D2BFCED700059CF12 /* LogInEmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInEmailView.swift; sourceTree = "<group>"; };
-		C465B50F2BFD29D30059CF12 /* DormitoriesDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DormitoriesDatabase.swift; sourceTree = "<group>"; };
+		C465B50F2BFD29D30059CF12 /* Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
 		C465B5112BFD2D6E0059CF12 /* dormitories.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = dormitories.json; sourceTree = "<group>"; };
-		C465B5142BFD2DA60059CF12 /* DormitoriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DormitoriesView.swift; sourceTree = "<group>"; };
 		C465B5162BFD30480059CF12 /* DormitoriesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DormitoriesManager.swift; sourceTree = "<group>"; };
 		C49ED2272BEA864C0041CBE1 /* Dormitory.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dormitory.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C49ED22A2BEA864C0041CBE1 /* DormitoryApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DormitoryApp.swift; sourceTree = "<group>"; };
-		C49ED22C2BEA864C0041CBE1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		C49ED22E2BEA864E0041CBE1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C49ED2312BEA864E0041CBE1 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		C49ED23A2BEA891A0041CBE1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		C4CA590D2C020D4400B53241 /* RequestRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestRow.swift; sourceTree = "<group>"; };
+		C4CA590F2C020D7200B53241 /* RequestViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestViewModel.swift; sourceTree = "<group>"; };
+		C4CA59112C020F0400B53241 /* NewRequestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewRequestView.swift; sourceTree = "<group>"; };
+		C4CA59132C021B9400B53241 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,22 +134,35 @@
 			path = Subviews;
 			sourceTree = "<group>";
 		};
-		C45A95DD2BF5DDBD0048B93B /* Authentication */ = {
+		C4477ECE2C02024B00600F57 /* Requests */ = {
 			isa = PBXGroup;
 			children = (
-				C45A95E42BF646D20048B93B /* AuthManager.swift */,
+				C457FE5D2C0332A9002DE4EF /* Subviews */,
+				C4477ECF2C02026300600F57 /* RequestView.swift */,
+				C4CA590F2C020D7200B53241 /* RequestViewModel.swift */,
 			);
-			path = Authentication;
+			path = Requests;
+			sourceTree = "<group>";
+		};
+		C457FE5D2C0332A9002DE4EF /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				C4CA590D2C020D4400B53241 /* RequestRow.swift */,
+				C4CA59112C020F0400B53241 /* NewRequestView.swift */,
+			);
+			path = Subviews;
 			sourceTree = "<group>";
 		};
 		C45CC6AC2BFCBC2000A19317 /* Core */ = {
 			isa = PBXGroup;
 			children = (
 				C45A95E62BF6877F0048B93B /* RootView.swift */,
-				C465B5132BFD2D930059CF12 /* Dormitories */,
 				C45CC6B02BFCBCC800A19317 /* Authentication */,
+				C4477EB22BFDEEE000600F57 /* Notifications */,
+				C4477ECE2C02024B00600F57 /* Requests */,
 				C45CC6B62BFCBDD000A19317 /* Profile */,
 				C45CC6AD2BFCBC7900A19317 /* Settings */,
+				C465B5082BFCECF30059CF12 /* Utilities */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -177,6 +200,7 @@
 			isa = PBXGroup;
 			children = (
 				C45CC6B72BFCBDF400A19317 /* ProfileView.swift */,
+				C4CA59132C021B9400B53241 /* ProfileViewModel.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -184,9 +208,11 @@
 		C45CC6B92BFCC1CF00A19317 /* Firestore */ = {
 			isa = PBXGroup;
 			children = (
+				C45A95E42BF646D20048B93B /* AuthManager.swift */,
 				C45CC6BA2BFCC20000A19317 /* UserManager.swift */,
 				C465B5162BFD30480059CF12 /* DormitoriesManager.swift */,
 				C4477EBC2BFE4AE900600F57 /* NotificationManager.swift */,
+				C4477ECC2C01CF8500600F57 /* RequestManager.swift */,
 			);
 			path = Firestore;
 			sourceTree = "<group>";
@@ -194,18 +220,13 @@
 		C465B5082BFCECF30059CF12 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				C4477EB52BFE48F600600F57 /* JSON */,
 				C465B5092BFCED120059CF12 /* CustomModifiers.swift */,
-				C465B50F2BFD29D30059CF12 /* DormitoriesDatabase.swift */,
+				C465B50F2BFD29D30059CF12 /* Database.swift */,
+				C4477EC02C00F2B100600F57 /* OldFunctions-Unused.swift */,
+				C457FE5B2C032B67002DE4EF /* DormitoryEnums.swift */,
 			);
 			path = Utilities;
-			sourceTree = "<group>";
-		};
-		C465B5132BFD2D930059CF12 /* Dormitories */ = {
-			isa = PBXGroup;
-			children = (
-				C465B5142BFD2DA60059CF12 /* DormitoriesView.swift */,
-			);
-			path = Dormitories;
 			sourceTree = "<group>";
 		};
 		C49ED21E2BEA864C0041CBE1 = {
@@ -227,15 +248,9 @@
 		C49ED2292BEA864C0041CBE1 /* Dormitory */ = {
 			isa = PBXGroup;
 			children = (
-				C4477EC02C00F2B100600F57 /* OldFunctions-Unused.swift */,
 				C49ED22A2BEA864C0041CBE1 /* DormitoryApp.swift */,
-				C49ED22C2BEA864C0041CBE1 /* ContentView.swift */,
-				C4477EB52BFE48F600600F57 /* JSON */,
-				C4477EB22BFDEEE000600F57 /* Notifications */,
-				C465B5082BFCECF30059CF12 /* Utilities */,
 				C45CC6AC2BFCBC2000A19317 /* Core */,
 				C45CC6B92BFCC1CF00A19317 /* Firestore */,
-				C45A95DD2BF5DDBD0048B93B /* Authentication */,
 				C49ED23A2BEA891A0041CBE1 /* GoogleService-Info.plist */,
 				C49ED22E2BEA864E0041CBE1 /* Assets.xcassets */,
 				C49ED2302BEA864E0041CBE1 /* Preview Content */,
@@ -337,27 +352,32 @@
 			files = (
 				C45A95E92BF6905D0048B93B /* SettingsView.swift in Sources */,
 				C45A95E12BF5DFBB0048B93B /* AuthView.swift in Sources */,
-				C49ED22D2BEA864C0041CBE1 /* ContentView.swift in Sources */,
 				C465B50E2BFCED700059CF12 /* LogInEmailView.swift in Sources */,
+				C457FE5C2C032B67002DE4EF /* DormitoryEnums.swift in Sources */,
 				C4477EBF2BFF9A5200600F57 /* NewNotificationView.swift in Sources */,
+				C4477ECD2C01CF8500600F57 /* RequestManager.swift in Sources */,
 				C4477EC92C01015A00600F57 /* NotificationsViewModel.swift in Sources */,
 				C45A95E72BF6877F0048B93B /* RootView.swift in Sources */,
 				C4477EC72C00F9AD00600F57 /* NotificationRow.swift in Sources */,
 				C49ED22B2BEA864C0041CBE1 /* DormitoryApp.swift in Sources */,
 				C45CC6B52BFCBD8400A19317 /* SignUpEmailViewModel.swift in Sources */,
 				C45CC6BB2BFCC20000A19317 /* UserManager.swift in Sources */,
-				C465B5102BFD29D30059CF12 /* DormitoriesDatabase.swift in Sources */,
+				C4477ED02C02026300600F57 /* RequestView.swift in Sources */,
+				C465B5102BFD29D30059CF12 /* Database.swift in Sources */,
 				C45A95DF2BF5DF3A0048B93B /* SignUpEmailView.swift in Sources */,
 				C465B5172BFD30480059CF12 /* DormitoriesManager.swift in Sources */,
 				C465B50A2BFCED120059CF12 /* CustomModifiers.swift in Sources */,
+				C4CA59122C020F0400B53241 /* NewRequestView.swift in Sources */,
 				C45CC6B22BFCBCDC00A19317 /* AuthenticationViewModel.swift in Sources */,
-				C465B5152BFD2DA60059CF12 /* DormitoriesView.swift in Sources */,
+				C4CA590E2C020D4400B53241 /* RequestRow.swift in Sources */,
 				C45A95E52BF646D20048B93B /* AuthManager.swift in Sources */,
 				C4477EC12C00F2B100600F57 /* OldFunctions-Unused.swift in Sources */,
 				C4477EBD2BFE4AE900600F57 /* NotificationManager.swift in Sources */,
+				C4CA59142C021B9400B53241 /* ProfileViewModel.swift in Sources */,
 				C4477EC42C00F69800600F57 /* UserNotificationView.swift in Sources */,
 				C45CC6B82BFCBDF400A19317 /* ProfileView.swift in Sources */,
 				C45CC6AF2BFCBC9C00A19317 /* SettingsViewModel.swift in Sources */,
+				C4CA59102C020D7200B53241 /* RequestViewModel.swift in Sources */,
 				C4477EB42BFDEEF600600F57 /* AdminNotificationView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
