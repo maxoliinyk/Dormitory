@@ -6,29 +6,29 @@
 //
 
 import Foundation
-import SwiftUI
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 @MainActor
 final class NotificationsViewModel: ObservableObject {
     @Published var notifications: [DBNotification] = []
-    
+
+    func loadNotifications() async {
+        do {
+            let snapshot = try await Firestore.firestore().collection("notifications").getDocuments()
+            self.notifications = snapshot.documents.compactMap { document in
+                try? document.data(as: DBNotification.self)
+            }
+        } catch {
+            print("Error loading notifications: \(error)")
+        }
+    }
+
     func sortNotifications() {
         notifications.sort { $0.date.dateValue() > $1.date.dateValue() }
     }
 
-    private func convertDateStringToTimestamp(dateString: String, format: String = "yyyy-MM-dd") -> Timestamp? {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = format
-        guard let date = dateFormatter.date(from: dateString) else {
-            print("Invalid date format for date string: \(dateString)")
-            return nil
-        }
-        return Timestamp(date: date)
-    }
-    
-    func formatDate(timestamp: Timestamp) -> String {
+    func formatDate(from timestamp: Timestamp) -> String {
         let date = timestamp.dateValue()
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .short
@@ -38,9 +38,9 @@ final class NotificationsViewModel: ObservableObject {
 
     func addNewNotification(dormitoryID: String, title: String, content: String, postedBy: String) {
         let newNotification = generateNotification(dormitoryID: dormitoryID, title: title, content: content, postedBy: postedBy)
-
+        
         notifications.append(newNotification)
-
+        
         // Upload the new notification to Firestore
         Task {
             do {
@@ -53,32 +53,16 @@ final class NotificationsViewModel: ObservableObject {
     }
 
     private func generateNotification(dormitoryID: String, title: String, content: String, postedBy: String) -> DBNotification {
-        let notificationID = UUID().uuidString  // Automatically generate a unique notification ID
-        let currentDate = Date()  // Get the current date
-
-        return DBNotification(
-            notificationID: notificationID,
+        DBNotification(
+            notificationID: UUID().uuidString,  // Automatically generate a unique notification ID
             dormitoryID: dormitoryID,
             title: title,
             content: content,
             postedBy: postedBy,
-            date: Timestamp(date: currentDate)
+            date: Timestamp(date: Date())  // Get the current date
         )
     }
 
-    func loadNotifications() async {
-        do {
-            let fetchedNotifications = try await NotificationManager.shared.fetchAllNotifications()
-            DispatchQueue.main.async {
-                self.notifications = fetchedNotifications
-                self.sortNotifications()
-
-            }
-        } catch {
-            print("Failed to fetch notifications: \(error)")
-        }
-    }
-    
     func deleteNotification(notificationID: String) {
         // Remove the notification from the local list
         if let index = notifications.firstIndex(where: { $0.notificationID == notificationID }) {

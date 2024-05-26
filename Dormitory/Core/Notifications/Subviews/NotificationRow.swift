@@ -24,7 +24,7 @@ struct NotificationRow: View {
                     .font(.subheadline)
                     .foregroundColor(.secondary)
                 
-                Text("Posted by \(notification.postedBy) on \(formattedDate)")
+                Text("Повідомив \(notification.postedBy) від \(formattedDate)")
                     .font(.footnote)
                     .foregroundColor(.gray)
             }
