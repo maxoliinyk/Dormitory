@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 @MainActor
 final class NewNotificationViewModel: ObservableObject {
@@ -13,6 +14,10 @@ final class NewNotificationViewModel: ObservableObject {
     @Published var title: String = ""
     @Published var content: String = ""
     @Published var postedBy: String = ""
+    
+    func setCurrentUserName(_ userName: String) {
+        self.postedBy = userName
+    }
     
     func resetFields() {
         dormitoryID = .dormitory1
@@ -24,13 +29,13 @@ final class NewNotificationViewModel: ObservableObject {
 
 struct NewNotificationView: View {
     @StateObject private var viewModel = NewNotificationViewModel()
-    var onSave: (DormitoryIDs, String, String, String) -> Void // Updated to use DormitoryIDs
+    var onSave: (DormitoryIDs, String, String, String) -> Void
     @Environment(\.dismiss) private var dismiss
     
     var body: some View {
         NavigationStack {
             Form {
-                Section(header: Text("Notification Details")) {
+                Section(header: Text("Деталі оголошення")) {
                     Picker("Гуртожиток", selection: $viewModel.dormitoryID) {
                         ForEach(DormitoryIDs.allCases, id: \.self) { dormitory in
                             Text(dormitory.displayName).tag(dormitory)
@@ -38,37 +43,56 @@ struct NewNotificationView: View {
                     }
                     .pickerStyle(.menu)
                     
-                    TextField("Title", text: $viewModel.title)
+                    TextField("Заголовок...", text: $viewModel.title)
                     
                     ZStack(alignment: .topLeading) {
                         if viewModel.content.isEmpty {
-                            Text("Enter your message here")
+                            Text("Введіть ваше повідомлення...")
                                 .foregroundColor(Color.gray.opacity(0.6))
                                 .padding(.horizontal, 8)
                                 .padding(.vertical, 12)
                         }
                         TextEditor(text: $viewModel.content)
-                            .frame(height: 150) // Adjust the height as needed
+                            .frame(height: 150)
                             .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray.opacity(0.5)))
                             .padding(.top, 8)
                     }
-                    
-                    TextField("Posted By", text: $viewModel.postedBy)
                 }
             }
-            .navigationTitle("New Notification")
+            .navigationTitle("Нове оголошення")
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") {
+                    Button("Скасувати") {
                         dismiss()
                     }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Save") {
+                    Button("Надіслати") {
                         onSave(viewModel.dormitoryID, viewModel.title, viewModel.content, viewModel.postedBy)
                         dismiss()
                     }
-                    .disabled(viewModel.title.isEmpty || viewModel.content.isEmpty || viewModel.postedBy.isEmpty)
+                    .disabled(viewModel.title.isEmpty || viewModel.content.isEmpty)
+                }
+            }
+            .onAppear {
+                Task {
+                    if let userID = Auth.auth().currentUser?.uid {
+                        do {
+                            let user = try await UserManager.shared.getUser(userID: userID)
+                            if let userName = user.name, let userLastName = user.lastName {
+                                viewModel.setCurrentUserName("\(userName) \(userLastName)")
+                            } else {
+                                // Handle case where user name or last name is not available
+                                viewModel.setCurrentUserName("Unknown User")
+                            }
+                        } catch {
+                            // Handle error appropriately
+                            print("Failed to fetch user: \(error)")
+                        }
+                    } else {
+                        // Handle case where user is not authenticated
+                        print("No authenticated user found.")
+                    }
                 }
             }
         }

@@ -15,7 +15,7 @@ struct SettingsView: View {
     
     var body: some View {
         List {
-            Button("Log Out") {
+            Button("Вийти") {
                 Task {
                     do {
                         try viewModel.signOut()
@@ -26,7 +26,7 @@ struct SettingsView: View {
                 }
             }
             
-            Button("Reset password") {
+            Button("Скинути пароль") {
                 Task {
                     do {
                         try await viewModel.resetPassword()
@@ -37,10 +37,10 @@ struct SettingsView: View {
                 }
             }
         }
-        .navigationTitle("Settings")
+        .navigationTitle("Налаштування")
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                Button("Done") { dismiss() }
+                Button("Готово") { dismiss() }
             }
         }
     }

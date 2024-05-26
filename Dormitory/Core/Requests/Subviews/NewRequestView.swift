@@ -21,20 +21,20 @@ struct NewRequestView: View {
     @Environment(\.presentationMode) var presentationMode
     @State private var title = ""
     @State private var content = ""
-
+    
     
     let addRequestAction: (String, String, String, String) async -> Void
     
     var body: some View {
         NavigationStack {
             Form {
-                Section(header: Text("Title")) {
-                    TextField("Enter Title", text: $title)
+                Section(header: Text("Заголовок")) {
+                    TextField("Введіть заголовок...", text: $title)
                 }
-                Section(header: Text("Content")) {
+                Section(header: Text("Зміст")) {
                     ZStack(alignment: .topLeading) {
                         if content.isEmpty {
-                            Text("Enter your message here")
+                            Text("Введіть ваше повідомлення...")
                                 .foregroundColor(Color.gray.opacity(0.6))
                                 .padding(.horizontal, 8)
                                 .padding(.vertical, 12)
@@ -46,14 +46,16 @@ struct NewRequestView: View {
                     }
                 }
             }
-            .navigationTitle("New Request")
+            .navigationTitle("Новий запит")
             .toolbar {
-                ToolbarItemGroup() {
-                    Button("Cancel") {
+                ToolbarItemGroup(placement: .cancellationAction) {
+                    Button("Скасувати") {
                         dismiss()
                     }
-                                    
-                    Button("Submit") {
+                }
+                
+                ToolbarItemGroup(placement: .confirmationAction) {
+                    Button("Надіслати") {
                         Task {
                             let dormitoryID = viewModel.currentUser?.dormitoryID ?? "err"
                             let roomNumber = viewModel.currentUser?.roomNumber ?? "err"
@@ -63,17 +65,7 @@ struct NewRequestView: View {
                     }
                     .disabled(title.isEmpty || content.isEmpty)
                 }
-                
             }
         }
     }
 }
-
-//#Preview {
-//    NewRequestView {title, content in
-////        print("Dormitory ID: \(dormitoryID)")
-//        print("Title: \(title)")
-//        print("Content: \(content)")
-////        print("Room Number: \(roomNumber)")
-//    }
-//}

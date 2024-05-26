@@ -15,7 +15,7 @@ final class SignUpEmailViewModel: ObservableObject {
     @Published var name = ""
     @Published var lastName = ""
     @Published var roomNumber = ""
-    @Published var dormitoryID: DormitoryIDs = .dormitory1 // Updated to use Dormitory enum
+    @Published var dormitoryID: DormitoryIDs = .dormitory1 // Use the unified DormitoryIDs enum
     @Published var isAdmin = false
     
     func signUp() async throws {
@@ -46,26 +46,26 @@ final class SignUpEmailViewModel: ObservableObject {
             throw URLError(.badURL)
         }
         
-        
         try await AuthManager.shared.signInUser(email: email, password: password)
     }
 }
 
-enum DormitoryIDs: String, CaseIterable, Identifiable {
-    case dormitory1 = "dormitory1"
-    case dormitory2 = "dormitory2"
-    case dormitory3 = "dormitory3"
-    
-    var id: String { self.rawValue }
-    
-    var displayName: String {
-        switch self {
-        case .dormitory1:
-            return "Гуртожиток 1"
-        case .dormitory2:
-            return "Гуртожиток 2"
-        case .dormitory3:
-            return "Гуртожиток 3"
-        }
-    }
-}
+
+//enum DormitoryIDs: String, CaseIterable, Identifiable {
+//    case dormitory1 = "dormitory1"
+//    case dormitory2 = "dormitory2"
+//    case dormitory3 = "dormitory3"
+//    
+//    var id: String { self.rawValue }
+//    
+//    var displayName: String {
+//        switch self {
+//        case .dormitory1:
+//            return "Гуртожиток 1"
+//        case .dormitory2:
+//            return "Гуртожиток 2"
+//        case .dormitory3:
+//            return "Гуртожиток 3"
+//        }
+//    }
+//}

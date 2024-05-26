@@ -14,9 +14,9 @@ struct LogInEmailView: View {
     
     var body: some View {
         VStack {
-            TextField("Email...", text: $viewModel.email)
+            TextField("Електронна адреса...", text: $viewModel.email)
                 .modifiedField()
-            SecureField("Password...", text: $viewModel.password)
+            SecureField("Пароль...", text: $viewModel.password)
                 .modifiedField()
             
             Button {
@@ -31,7 +31,7 @@ struct LogInEmailView: View {
                     }
                 }
             } label: {
-                Text("Log in")
+                Text("Увійти")
                     .font(.headline)
                     .foregroundStyle(.white)
                     .frame(height: 55)
@@ -43,7 +43,7 @@ struct LogInEmailView: View {
             NavigationLink {
                 SignUpEmailView(showSignUpView: $showSignUpView)
             } label: {
-                Text("Create an account")
+                Text("Створити обліковий запис")
                     .font(.headline)
 //                    .foregroundStyle(.white)
                     .frame(height: 55)
@@ -55,7 +55,7 @@ struct LogInEmailView: View {
             Spacer()
         }
         .padding()
-        .navigationTitle("Sign Up With Email")
+        .navigationTitle("Ласкаво просимо!")
         .textInputAutocapitalization(.never)
     }
 }

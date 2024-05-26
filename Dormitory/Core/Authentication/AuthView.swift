@@ -16,7 +16,7 @@ struct AuthView: View {
             NavigationLink {
                 LogInEmailView(showSignUpView: $showSignUpView)
             } label: {
-                Text("Continue With Email")
+                Text("Продовжити з Email")
                     .font(.headline)
                     .foregroundStyle(.white)
                     .frame(height: 55)
