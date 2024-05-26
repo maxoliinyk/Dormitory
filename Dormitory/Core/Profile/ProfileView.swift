@@ -6,24 +6,13 @@
 //
 
 import SwiftUI
-
-@MainActor final class ProfileViewModel: ObservableObject {
-    
-    @Published private(set) var user: DBUser? = nil
-    @Published private(set) var dormitory: DBDormitory? = nil
-    
-    func loadCurrentUser() async throws {
-        let authDataResult = try AuthManager.shared.getAuthenticatedUser()
-        self.user = try await UserManager.shared.getUser(userID: authDataResult.uid)
-        self.dormitory = try await DormitoriesManager.shared.getDormitory(id: user?.dormitoryID ?? "")
-    }
-}
+import Firebase
 
 struct ProfileView: View {
     
     @StateObject private var viewModel = ProfileViewModel()
-    @StateObject private var dormViewModel = DormitoriesViewModel()
     @State private var showingSettings = false
+    @State private var showingNewRequestView = false
     @Binding var showSignUpView: Bool
     @Environment(\.dismiss) var dismiss
     
@@ -31,11 +20,9 @@ struct ProfileView: View {
         ZStack {
             if let user = viewModel.user,
                let dormitory = viewModel.dormitory,
-               let dormitoryID = DormitoryIDs(rawValue: user.dormitoryID),
-               let displayName = DormitoryDisplayNames(dormitoryID: dormitoryID) {
+               let dormitoryID = DormitoryIDs(rawValue: user.dormitoryID) { // Use the unified DormitoryIDs enum
                 
                 ScrollView {
-                    
                     // Profile
                     VStack {
                         Image(systemName: "person.circle")
@@ -47,15 +34,16 @@ struct ProfileView: View {
                         
                         Text("\(String(user.name ?? "")) \(String(user.lastName ?? ""))")
                             .font(.title.bold())
-                        Text("\(String(displayName.rawValue)) • \(String(user.roomNumber ?? "")) кімната")
+                        Text("\(dormitoryID.displayName) • \(String(user.roomNumber ?? "")) кімната") // Use displayName from DormitoryIDs
                             .font(.footnote)
                             .padding(.bottom, 15)
                         
-                        Divider()
+
                     }
                     .padding(.bottom, 10)
                     
-                    //                        Spacer()
+                    Divider()
+                        .padding(.horizontal)
                     
                     // Dormitory
                     HStack {
@@ -70,6 +58,7 @@ struct ProfileView: View {
                         .padding()
                         
                         Spacer()
+                        
                         VStack {
                             Text(dormitory.number)
                                 .font(.largeTitle)
@@ -82,60 +71,110 @@ struct ProfileView: View {
                     .cornerRadius(10)
                     .shadow(radius: 10)
                     .padding()
+                    
+                    Divider()
+                        .padding(.horizontal)
+                    
+                    // Requests (if not admin)
+                    if !viewModel.isAdmin {
+                        VStack(alignment: .leading) {
+                            Text("Запити мого гуртожитку")
+                                .font(.title2.bold())
+                                .padding(.leading)
+                            
+                            Divider()
+                                .padding(.bottom)
+                                .padding(.horizontal)
+                            
+                            ForEach(viewModel.requests) { request in
+                                
+                                
+                                HStack {
+                                    VStack(alignment: .leading) {
+                                        Text(request.title)
+                                            .font(.title2.bold())
+                                        Text(request.content)
+                                            .font(.callout)
+                                    }
+                                    .padding()
+                                    Spacer()
+                                }
+                                .frame(maxWidth: .infinity)
+                                .background(.ultraThickMaterial)
+                                .cornerRadius(10)
+                                .shadow(radius: 10)
+                                .padding(.horizontal)
+                                .padding(.bottom, 10)
+                            }
+                            
+                            if viewModel.requests.isEmpty {
+                                Text("Не знайдено жодного запиту.")
+                                    .font(.subheadline)
+                                    .padding()
+                            }
+                        }
+                    }
                 }
             }
         }
-        .task  {
+        .task {
             try? await viewModel.loadCurrentUser()
         }
-        .navigationTitle("Profile")
+        .navigationTitle("Профіль")
         .navigationBarTitleDisplayMode(.inline)
-        .sheet(isPresented: $showingSettings) {
-            NavigationStack {
-                SettingsView(showSignUpView: $showSignUpView)
-            }
-        }
         .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
+            ToolbarItemGroup(placement: .topBarLeading) {
                 Button("Settings", systemImage: "gear") {
                     showingSettings = true
                 }
                 .font(.headline)
             }
-            ToolbarItem(placement: .topBarTrailing) {
-                Button("Done") {
+            ToolbarItemGroup(placement: .topBarTrailing) {
+                Button("Готово") {
                     dismiss()
                 }
             }
         }
-    }
-}
+        .sheet(isPresented: $showingSettings) {
+            NavigationStack {
+                SettingsView(showSignUpView: $showSignUpView)
+            }
+        }
+        .sheet(isPresented: $showingNewRequestView) {
+            NewRequestView(addRequestAction: { dormitoryID, title, content, roomNumber in
+                do {
+                    // Make sure user is loaded
+                    guard let user = viewModel.user else {
+                        print("User not loaded")
+                        return
+                    }
+                    
+                    // Combine name and lastName to form postedBy string
+                    let postedBy = "\(user.name) \(user.lastName)"
+                    
+                    // Create a new DBRequest object
+                    let request = DBRequest(
+                        requestID: UUID().uuidString,
+                        dormitoryID: dormitoryID,
+                        title: title,
+                        content: content,
+                        postedBy: postedBy, // Use combined name and last name
+                        roomNumber: roomNumber,
+                        date: Timestamp(date: Date())
+                    )
+                    
+                    // Upload the request
+                    try await RequestManager.shared.uploadRequest(request: request)
+                    
+                    // Refresh the data
+                    try await viewModel.loadCurrentUser()
+                } catch {
+                    // Handle the error appropriately (e.g., show an alert)
+                    print("Failed to add request or load current user: \(error)")
+                }
+            })
+        }
 
-enum DormitoryDisplayNames: String, CaseIterable {
-    case dormitory1 = "Гуртожиток #1"
-    case dormitory2 = "Гуртожиток #2"
-    case dormitory3 = "Гуртожиток #3"
-    
-    var dormitoryID: DormitoryIDs {
-        switch self {
-        case .dormitory1:
-            return .dormitory1
-        case .dormitory2:
-            return .dormitory2
-        case .dormitory3:
-            return .dormitory3
-        }
-    }
-    
-    init?(dormitoryID: DormitoryIDs) {
-        switch dormitoryID {
-        case .dormitory1:
-            self = .dormitory1
-        case .dormitory2:
-            self = .dormitory2
-        case .dormitory3:
-            self = .dormitory3
-        }
     }
 }
 
