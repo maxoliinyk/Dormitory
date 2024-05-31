@@ -61,7 +61,7 @@ struct LogInEmailView: View {
 }
 
 #Preview {
-    NavigationStack {
+    NavigationView {
         LogInEmailView(showSignUpView: .constant(true))
     }
 }

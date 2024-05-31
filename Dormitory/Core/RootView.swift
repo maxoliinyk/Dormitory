@@ -16,7 +16,7 @@ struct RootView: View {
     
     var body: some View {
         ZStack {
-            NavigationStack {
+            NavigationView {
                 if isLoading {
                     ProgressView("Loading...") // Show a loading indicator while fetching user data
                 } else {
@@ -34,7 +34,7 @@ struct RootView: View {
             }
         }
         .fullScreenCover(isPresented: $showSignUpView) {
-            NavigationStack {
+            NavigationView {
                 LogInEmailView(showSignUpView: $showSignUpView)
             }
         }

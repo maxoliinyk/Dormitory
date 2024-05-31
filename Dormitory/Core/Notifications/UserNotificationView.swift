@@ -52,12 +52,10 @@ struct UserNotificationView: View {
                 NewRequestView(addRequestAction: requestViewModel.addNewRequest)
             }
         }
-        .onAppear {
-            Task {
-                await viewModel.loadNotifications()
-                await requestViewModel.loadCurrentUser()
-                await requestViewModel.loadRequests()
-            }
+        .task {
+            await viewModel.loadNotifications()
+            await requestViewModel.loadCurrentUser()
+            await requestViewModel.loadRequests()
         }
         .toolbar {
             ToolbarItemGroup(placement: .topBarTrailing) {                
@@ -66,7 +64,7 @@ struct UserNotificationView: View {
                 }
                 .font(.headline)
                 .sheet(isPresented: $showingProfile) {
-                    NavigationStack {
+                    NavigationView {
                         ProfileView(showSignUpView: $showSignUpView)
                     }
                 }
@@ -76,7 +74,7 @@ struct UserNotificationView: View {
 }
 
 #Preview {
-    NavigationStack {
+    NavigationView {
         UserNotificationView(showSignUpView: .constant(false), dormitoryID: "dormitory1")
     }
 }

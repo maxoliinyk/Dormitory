@@ -14,15 +14,15 @@ struct SignUpEmailView: View {
     
     var body: some View {
         VStack {
-            TextField("Email...", text: $viewModel.email)
+            TextField("Електронна адреса...", text: $viewModel.email)
                 .modifiedField()
                 .textInputAutocapitalization(.never)
-            SecureField("Password...", text: $viewModel.password)
+            SecureField("Пароль...", text: $viewModel.password)
                 .modifiedField()
                 .textInputAutocapitalization(.never)
-            TextField("Name...", text: $viewModel.name)
+            TextField("Імʼя...", text: $viewModel.name)
                 .modifiedField()
-            TextField("Last name...", text: $viewModel.lastName)
+            TextField("Прізвище...", text: $viewModel.lastName)
                 .modifiedField()
             Picker("Гуртожиток", selection: $viewModel.dormitoryID) {
                     ForEach(DormitoryIDs.allCases) { dormitory in
@@ -33,7 +33,7 @@ struct SignUpEmailView: View {
             .frame(maxWidth: .infinity)
             .modifiedField()
             
-            TextField("Room number...", text: $viewModel.roomNumber)
+            TextField("Номер кімнати...", text: $viewModel.roomNumber)
                 .modifiedField()
             
             Button {
@@ -48,7 +48,7 @@ struct SignUpEmailView: View {
                     }
                 }
             } label: {
-                Text("Sign Up")
+                Text("Створити обліковий запис")
                     .font(.headline)
                     .foregroundStyle(.white)
                     .frame(height: 55)
@@ -59,12 +59,12 @@ struct SignUpEmailView: View {
             Spacer()
         }
         .padding()
-        .navigationTitle("Sign Up With Email")
+        .navigationTitle("Створення акаунту")
     }
 }
 
 #Preview {
-    NavigationStack {
+    NavigationView {
         SignUpEmailView(showSignUpView: .constant(true))
     }
 }

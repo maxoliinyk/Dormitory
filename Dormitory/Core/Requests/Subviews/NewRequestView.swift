@@ -26,7 +26,7 @@ struct NewRequestView: View {
     let addRequestAction: (String, String, String, String) async -> Void
     
     var body: some View {
-        NavigationStack {
+        NavigationView {
             Form {
                 Section(header: Text("Заголовок")) {
                     TextField("Введіть заголовок...", text: $title)

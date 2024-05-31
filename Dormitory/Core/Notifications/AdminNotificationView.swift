@@ -11,6 +11,7 @@ import FirebaseFirestoreSwift
 
 struct AdminNotificationView: View {
     @StateObject private var viewModel = NotificationsViewModel()
+    @StateObject private var requestViewModel = RequestViewModel()
     @State private var showingNewNotificationView = false
     @State private var showingProfile = false
     @State private var showingAdminRequestView = false
@@ -60,10 +61,10 @@ struct AdminNotificationView: View {
             }
         }
         .navigationTitle("Оголошення")
-        .onAppear {
-            Task {
-                await viewModel.loadNotifications()
-            }
+        .task {
+            await viewModel.loadNotifications()
+            await requestViewModel.loadCurrentUser()
+            await requestViewModel.loadRequests()
         }
         .onChange(of: viewModel.notifications) { _ in
             viewModel.sortNotifications()
@@ -75,7 +76,7 @@ struct AdminNotificationView: View {
                 }
                 .font(.headline)
                 .sheet(isPresented: $showingAdminRequestView) {
-                    NavigationStack {
+                    NavigationView {
                         RequestView(showSignUpView: $showSignUpView)
                     }
                 }
@@ -85,7 +86,7 @@ struct AdminNotificationView: View {
                 }
                 .font(.headline)
                 .sheet(isPresented: $showingProfile) {
-                    NavigationStack {
+                    NavigationView {
                         ProfileView(showSignUpView: $showSignUpView)
                     }
                 }
@@ -95,7 +96,7 @@ struct AdminNotificationView: View {
 }
 
 #Preview {
-    NavigationStack {
+    NavigationView {
         AdminNotificationView(showSignUpView: .constant(false))
     }
 }

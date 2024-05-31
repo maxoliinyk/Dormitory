@@ -136,7 +136,7 @@ struct ProfileView: View {
             }
         }
         .sheet(isPresented: $showingSettings) {
-            NavigationStack {
+            NavigationView {
                 SettingsView(showSignUpView: $showSignUpView)
             }
         }
@@ -180,7 +180,7 @@ struct ProfileView: View {
 
 
 #Preview {
-    NavigationStack {
+    NavigationView {
         ProfileView(showSignUpView: .constant(false))
     }
 }

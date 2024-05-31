@@ -47,7 +47,7 @@ struct SettingsView: View {
 }
 
 #Preview {
-    NavigationStack {
+    NavigationView {
         SettingsView(showSignUpView: .constant(false))
     }
 }

@@ -33,7 +33,7 @@ struct NewNotificationView: View {
     @Environment(\.dismiss) private var dismiss
     
     var body: some View {
-        NavigationStack {
+        NavigationView {
             Form {
                 Section(header: Text("Деталі оголошення")) {
                     Picker("Гуртожиток", selection: $viewModel.dormitoryID) {
