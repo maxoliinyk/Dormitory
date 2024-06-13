@@ -51,5 +51,4 @@ final class AuthManager {
     func signOut() throws {
         try Auth.auth().signOut()
     }
-    
 }

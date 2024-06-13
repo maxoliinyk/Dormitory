@@ -11,6 +11,8 @@ struct LogInEmailView: View {
     
     @StateObject var viewModel = SignUpEmailViewModel()
     @Binding var showSignUpView: Bool
+    @State private var showingAlert = false
+    @State private var alertMessage = ""
     
     var body: some View {
         VStack {
@@ -28,6 +30,8 @@ struct LogInEmailView: View {
                         return
                     } catch {
                         print("Error: \(error)")
+                        alertMessage = "Електронна адреса чи пароль невірні."
+                        showingAlert = true
                     }
                 }
             } label: {
@@ -39,16 +43,17 @@ struct LogInEmailView: View {
                     .background(Color.blue)
                     .cornerRadius(10)
             }
+            .alert(isPresented: $showingAlert) {
+                Alert(title: Text("Помилка авторизації"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
+            }
             
             NavigationLink {
                 SignUpEmailView(showSignUpView: $showSignUpView)
             } label: {
                 Text("Створити обліковий запис")
                     .font(.headline)
-//                    .foregroundStyle(.white)
                     .frame(height: 55)
                     .frame(maxWidth: .infinity)
-//                    .background(Color.white)
                     .cornerRadius(10)
             }
             

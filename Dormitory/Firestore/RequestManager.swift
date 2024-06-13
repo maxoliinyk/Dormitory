@@ -35,7 +35,7 @@ final class RequestManager {
     }
 
     func uploadRequest(request: DBRequest) async throws {
-        try await requestCollection.addDocument(from: request)
+        try requestCollection.addDocument(from: request)
     }
     
     func getRequest(id: String) async throws -> DBRequest {
@@ -62,7 +62,6 @@ final class RequestManager {
         try await requestDocument(id: requestID).delete()
     }
 
-    // New function to fetch requests for a specific dormitory ID
     func getRequests(forDormitoryID dormitoryID: String) async throws -> [DBRequest] {
         var requests: [DBRequest] = []
         

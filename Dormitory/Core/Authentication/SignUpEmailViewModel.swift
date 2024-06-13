@@ -15,7 +15,7 @@ final class SignUpEmailViewModel: ObservableObject {
     @Published var name = ""
     @Published var lastName = ""
     @Published var roomNumber = ""
-    @Published var dormitoryID: DormitoryIDs = .dormitory1 // Use the unified DormitoryIDs enum
+    @Published var dormitoryID: DormitoryIDs = .dormitory1
     @Published var isAdmin = false
     
     func signUp() async throws {
@@ -49,3 +49,6 @@ final class SignUpEmailViewModel: ObservableObject {
         try await AuthManager.shared.signInUser(email: email, password: password)
     }
 }
+
+
+

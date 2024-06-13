@@ -5,13 +5,6 @@
 //  Created by Max Oliinyk on 25.05.2024.
 //
 
-//
-//  NewRequestView.swift
-//  Dormitory
-//
-//  Created by Max Oliinyk on 25.05.2024.
-//
-
 import SwiftUI
 import Firebase
 

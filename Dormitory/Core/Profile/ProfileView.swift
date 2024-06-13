@@ -150,7 +150,7 @@ struct ProfileView: View {
                     }
                     
                     // Combine name and lastName to form postedBy string
-                    let postedBy = "\(user.name) \(user.lastName)"
+                    let postedBy = "\(user.name ?? "Студент") \(user.lastName ?? "")"
                     
                     // Create a new DBRequest object
                     let request = DBRequest(
