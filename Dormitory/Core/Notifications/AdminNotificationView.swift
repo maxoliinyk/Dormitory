@@ -10,9 +10,9 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 struct AdminNotificationView: View {
+    @EnvironmentObject var authViewModel: AuthViewModel
     @StateObject private var viewModel = NotificationsViewModel()
     @StateObject private var requestViewModel = RequestViewModel()
-    @ObservedObject var rootViewModel: RootViewModel
     @State private var showingNewNotificationView = false
     @State private var showingProfile = false
     @State private var showingAdminRequestView = false
@@ -72,7 +72,7 @@ struct AdminNotificationView: View {
         }
         .sheet(isPresented: $showingProfile) {
             NavigationStack {
-                ProfileView(rootViewModel: rootViewModel)
+                ProfileView()
             }
         }
         .task {
@@ -85,6 +85,6 @@ struct AdminNotificationView: View {
 
 #Preview {
     NavigationStack {
-        AdminNotificationView(rootViewModel: RootViewModel())
+        AdminNotificationView()
     }
 }

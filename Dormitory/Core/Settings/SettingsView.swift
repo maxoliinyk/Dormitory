@@ -8,9 +8,7 @@
 import SwiftUI
 
 struct SettingsView: View {
-
-    @StateObject private var viewModel = AuthenticationViewModel()
-    @ObservedObject var rootViewModel: RootViewModel
+    @EnvironmentObject var authViewModel: AuthViewModel
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
@@ -18,9 +16,9 @@ struct SettingsView: View {
             Button("Вийти") {
                 Task {
                     do {
-                        try viewModel.signOut()
-                        rootViewModel.showSignUpView = true
-                        rootViewModel.isAuthenticated = false
+                        try authViewModel.signOut()
+                        authViewModel.showSignUpView = true
+                        authViewModel.isAuthenticated = false
                         dismiss()
                     } catch {
                         print("Error: \(error)")
@@ -31,7 +29,7 @@ struct SettingsView: View {
             Button("Скинути пароль") {
                 Task {
                     do {
-                        try await viewModel.resetPassword()
+                        try await authViewModel.resetPassword()
                         print("Password reset")
                     } catch {
                         print("Error: \(error)")
@@ -48,8 +46,8 @@ struct SettingsView: View {
     }
 }
 
-//#Preview {
-//    NavigationStack {
-//        SettingsView(showSignUpView: .constant(false))
-//    }
-//}
+#Preview {
+    NavigationStack {
+        SettingsView()
+    }
+}

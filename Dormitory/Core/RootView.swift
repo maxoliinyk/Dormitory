@@ -8,28 +8,26 @@
 import SwiftUI
 
 struct RootView: View {
-    @StateObject private var viewModel = RootViewModel()
+    @EnvironmentObject var authViewModel: AuthViewModel
     
     var body: some View {
-        Group {
-            if viewModel.isAuthenticated {
+        ZStack {
+            if authViewModel.isAuthenticated {
                 NavigationStack {
-                    Group {
-                        if viewModel.isAdmin {
-                            AdminNotificationView(rootViewModel: viewModel)
+                        if authViewModel.isAdmin {
+                            AdminNotificationView()
                         } else {
-                            UserNotificationView(rootViewModel: viewModel, dormitoryID: viewModel.dormitoryID ?? "dormitory1")
+                            UserNotificationView(dormitoryID: authViewModel.dormitoryID)
                         }
-                    }
                 }
             } else {
                 NavigationStack {
-                    LogInEmailView(rootViewModel: viewModel)
+                    LogInEmailView()
                 }
             }
         }
         .overlay {
-            if viewModel.isLoading {
+            if authViewModel.isLoading {
                 ProgressView("Loading...")
             }
         }

@@ -8,21 +8,20 @@
 import SwiftUI
 
 struct LogInEmailView: View {
-    @StateObject private var viewModel = AuthenticationViewModel()
-    @ObservedObject var rootViewModel: RootViewModel
+    @EnvironmentObject var authViewModel: AuthViewModel
 
     var body: some View {
         VStack {
-            TextField("Електронна адреса...", text: $viewModel.email)
+            TextField("Електронна адреса...", text: $authViewModel.email)
                 .modifiedField
-            SecureField("Пароль...", text: $viewModel.password)
+            SecureField("Пароль...", text: $authViewModel.password)
                 .modifiedField
             
             Button {
                 Task {
                     do {
-                        try await viewModel.signIn()
-                        await rootViewModel.loadUserData()
+                        try await authViewModel.signIn()
+                        await authViewModel.loadUserData()
                     } catch {
                         print("Error: \(error)")
                     }
@@ -33,7 +32,7 @@ struct LogInEmailView: View {
             }
             
             NavigationLink {
-                SignUpEmailView(viewModel: viewModel, rootViewModel: rootViewModel)
+                SignUpEmailView()
             } label: {
                 Text("Створити обліковий запис")
                     .font(.headline)
@@ -53,6 +52,6 @@ struct LogInEmailView: View {
 
 #Preview {
     NavigationStack {
-        LogInEmailView(rootViewModel: RootViewModel())
+        LogInEmailView()
     }
 }

@@ -9,9 +9,8 @@ import SwiftUI
 import Firebase
 
 struct ProfileView: View {
-    
+    @EnvironmentObject var authViewModel: AuthViewModel
     @StateObject private var viewModel = ProfileViewModel()
-    @ObservedObject var rootViewModel: RootViewModel
     @State private var showingSettings = false
     @State private var showingNewRequestView = false
     @Environment(\.dismiss) var dismiss
@@ -137,7 +136,7 @@ struct ProfileView: View {
         }
         .sheet(isPresented: $showingSettings) {
             NavigationStack {
-                SettingsView(rootViewModel: rootViewModel)
+                SettingsView()
             }
         }
         .sheet(isPresented: $showingNewRequestView) {

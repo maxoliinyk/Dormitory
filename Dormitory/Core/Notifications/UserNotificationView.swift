@@ -10,18 +10,18 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 struct UserNotificationView: View {
+    @EnvironmentObject var authViewModel: AuthViewModel
     @StateObject private var viewModel = NotificationsViewModel()
     @StateObject private var requestViewModel = RequestViewModel()
-    @ObservedObject var rootViewModel: RootViewModel
     @State private var showingNewRequestView = false
     @State private var showingAdminRequestView = false
     @State private var showingProfile = false
-    var dormitoryID: String
+    var dormitoryID: DormitoryIDs
     
     var body: some View {
         VStack {
             ScrollView {
-                ForEach(viewModel.notifications.filter { $0.dormitoryID == dormitoryID }, id: \.notificationID) { notification in
+                ForEach(viewModel.notifications.filter { $0.dormitoryID == dormitoryID.rawValue }, id: \.notificationID) { notification in
                     NotificationRow(
                         notification: notification,
                         formattedDate: viewModel.formatDate(from: notification.date),
@@ -62,14 +62,14 @@ struct UserNotificationView: View {
         }
         .sheet(isPresented: $showingProfile) {
             NavigationStack {
-                ProfileView(rootViewModel: rootViewModel)
+                ProfileView()
             }
         }
     }
 }
 
-//#Preview {
-//    NavigationStack {
-//        UserNotificationView(showSignUpView: .constant(false), dormitoryID: "dormitory1")
-//    }
-//}
+#Preview {
+    NavigationStack {
+        UserNotificationView(dormitoryID: .dormitory1)
+    }
+}

@@ -8,38 +8,37 @@
 import SwiftUI
 
 struct SignUpEmailView: View {
-    @ObservedObject var viewModel: AuthenticationViewModel
-    @ObservedObject var rootViewModel: RootViewModel
-    
+    @EnvironmentObject var authViewModel: AuthViewModel
+
     private var isFormValid: Bool {
-        !viewModel.email.isEmpty &&
-        !viewModel.password.isEmpty &&
-        !viewModel.name.isEmpty &&
-        !viewModel.lastName.isEmpty &&
-        !viewModel.roomNumber.isEmpty
+        !authViewModel.email.isEmpty &&
+        !authViewModel.password.isEmpty &&
+        !authViewModel.name.isEmpty &&
+        !authViewModel.lastName.isEmpty &&
+        !authViewModel.roomNumber.isEmpty
     }
     
     var body: some View {
         ScrollView {
             VStack {
-                TextField("Електронна адреса...", text: $viewModel.email)
+                TextField("Електронна адреса...", text: $authViewModel.email)
                     .keyboardType(.emailAddress)
                     .modifiedField
                     .textInputAutocapitalization(.never)
                 
-                SecureField("Пароль...", text: $viewModel.password)
+                SecureField("Пароль...", text: $authViewModel.password)
                     .modifiedField
                     .textInputAutocapitalization(.never)
                 
-                TextField("Імʼя...", text: $viewModel.name)
+                TextField("Імʼя...", text: $authViewModel.name)
                     .keyboardType(.default)
                     .modifiedField
                 
-                TextField("Прізвище...", text: $viewModel.lastName)
+                TextField("Прізвище...", text: $authViewModel.lastName)
                     .keyboardType(.default)
                     .modifiedField
                 
-                Picker("Гуртожиток", selection: $viewModel.dormitoryID) {
+                Picker("Гуртожиток", selection: $authViewModel.dormitoryID) {
                     ForEach(DormitoryIDs.allCases) { dormitory in
                         Text(dormitory.displayName).tag(dormitory)
                     }
@@ -48,7 +47,7 @@ struct SignUpEmailView: View {
                 .frame(maxWidth: .infinity)
                 .modifiedField
                 
-                TextField("Номер кімнати...", text: $viewModel.roomNumber)
+                TextField("Номер кімнати...", text: $authViewModel.roomNumber)
                     .keyboardType(.numberPad)
                     .modifiedField
                 
@@ -56,8 +55,8 @@ struct SignUpEmailView: View {
                     if isFormValid {
                         Task {
                             do {
-                                try await viewModel.signUp()
-                                await rootViewModel.loadUserData()
+                                try await authViewModel.signUp()
+                                await authViewModel.loadUserData()
                             } catch {
                                 print("Error: \(error)")
                             }
@@ -76,6 +75,6 @@ struct SignUpEmailView: View {
 
 #Preview {
     NavigationStack {
-        SignUpEmailView(viewModel: AuthenticationViewModel(), rootViewModel: RootViewModel())
+        SignUpEmailView()
     }
 }
