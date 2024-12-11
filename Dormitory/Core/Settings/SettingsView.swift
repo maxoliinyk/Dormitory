@@ -9,8 +9,8 @@ import SwiftUI
 
 struct SettingsView: View {
 
-    @StateObject private var viewModel = SettingsViewModel()
-    @Binding var showSignUpView: Bool
+    @StateObject private var viewModel = AuthenticationViewModel()
+    @ObservedObject var rootViewModel: RootViewModel
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
@@ -19,7 +19,9 @@ struct SettingsView: View {
                 Task {
                     do {
                         try viewModel.signOut()
-                        showSignUpView = true
+                        rootViewModel.showSignUpView = true
+                        rootViewModel.isAuthenticated = false
+                        dismiss()
                     } catch {
                         print("Error: \(error)")
                     }
@@ -46,8 +48,8 @@ struct SettingsView: View {
     }
 }
 
-#Preview {
-    NavigationView {
-        SettingsView(showSignUpView: .constant(false))
-    }
-}
+//#Preview {
+//    NavigationStack {
+//        SettingsView(showSignUpView: .constant(false))
+//    }
+//}

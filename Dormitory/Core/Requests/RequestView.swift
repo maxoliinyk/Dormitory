@@ -13,7 +13,6 @@ struct RequestView: View {
     @StateObject private var viewModel = RequestViewModel()
     @State private var showingNewRequestView = false
     @State private var showingProfile = false
-    @Binding var showSignUpView: Bool
     
     var body: some View {
         ZStack {
@@ -53,6 +52,6 @@ struct RequestView: View {
 }
 
 // Preview
-#Preview {
-    RequestView(showSignUpView: .constant(false))
-}
+//#Preview {
+//    RequestView(showSignUpView: .constant(false))
+//}

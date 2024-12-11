@@ -12,10 +12,10 @@ import FirebaseFirestoreSwift
 struct AdminNotificationView: View {
     @StateObject private var viewModel = NotificationsViewModel()
     @StateObject private var requestViewModel = RequestViewModel()
+    @ObservedObject var rootViewModel: RootViewModel
     @State private var showingNewNotificationView = false
     @State private var showingProfile = false
     @State private var showingAdminRequestView = false
-    @Binding var showSignUpView: Bool
     
     var body: some View {
         ZStack {
@@ -40,13 +40,7 @@ struct AdminNotificationView: View {
                     showingNewNotificationView = true
                 } label: {
                     Image(systemName: "plus")
-                        .font(.system(size: 28, weight: .bold))
-                        .foregroundColor(.white)
-                        .frame(width: 70, height: 70)
-                        .background(Color.blue)
-                        .clipShape(Circle())
-                        .shadow(radius: 10)
-
+                        .circleButton
                 }
                 .padding(.horizontal)
                 .sheet(isPresented: $showingNewNotificationView) {
@@ -61,42 +55,36 @@ struct AdminNotificationView: View {
             }
         }
         .navigationTitle("Оголошення")
+        .toolbar {
+            ToolbarItemGroup(placement: .topBarTrailing) {
+                Button("Requests", systemImage: "list.bullet") {
+                    showingAdminRequestView = true
+                }.font(.headline)
+                Button("Profile", systemImage: "person.circle") {
+                    showingProfile = true
+                }.font(.headline)
+            }
+        }
+        .sheet(isPresented: $showingAdminRequestView) {
+            NavigationStack {
+                RequestView()
+            }
+        }
+        .sheet(isPresented: $showingProfile) {
+            NavigationStack {
+                ProfileView(rootViewModel: rootViewModel)
+            }
+        }
         .task {
             await viewModel.loadNotifications()
             await requestViewModel.loadCurrentUser()
             await requestViewModel.loadRequests()
         }
-        .onChange(of: viewModel.notifications) { _ in
-            viewModel.sortNotifications()
-        }
-        .toolbar {
-            ToolbarItemGroup(placement: .topBarTrailing) {
-                Button("Requests", systemImage: "list.bullet") {
-                    showingAdminRequestView = true
-                }
-                .font(.headline)
-                .sheet(isPresented: $showingAdminRequestView) {
-                    NavigationView {
-                        RequestView(showSignUpView: $showSignUpView)
-                    }
-                }
-                
-                Button ("Profile", systemImage: "person.circle") {
-                    showingProfile = true
-                }
-                .font(.headline)
-                .sheet(isPresented: $showingProfile) {
-                    NavigationView {
-                        ProfileView(showSignUpView: $showSignUpView)
-                    }
-                }
-            }
-        }
     }
 }
 
 #Preview {
-    NavigationView {
-        AdminNotificationView(showSignUpView: .constant(false))
+    NavigationStack {
+        AdminNotificationView(rootViewModel: RootViewModel())
     }
 }

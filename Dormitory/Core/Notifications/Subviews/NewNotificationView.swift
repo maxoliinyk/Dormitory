@@ -33,9 +33,9 @@ struct NewNotificationView: View {
     @Environment(\.dismiss) private var dismiss
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             Form {
-                Section(header: Text("Деталі оголошення")) {
+                Section(header: Text("Деталі")) {
                     Picker("Гуртожиток", selection: $viewModel.dormitoryID) {
                         ForEach(DormitoryIDs.allCases, id: \.self) { dormitory in
                             Text(dormitory.displayName).tag(dormitory)
@@ -44,18 +44,18 @@ struct NewNotificationView: View {
                     .pickerStyle(.menu)
                     
                     TextField("Заголовок...", text: $viewModel.title)
-                    
+                }
+                Section(header: Text("Повідомлення")) {
                     ZStack(alignment: .topLeading) {
                         if viewModel.content.isEmpty {
                             Text("Введіть ваше повідомлення...")
                                 .foregroundColor(Color.gray.opacity(0.6))
-                                .padding(.horizontal, 8)
-                                .padding(.vertical, 12)
+                                .padding(5)
                         }
                         TextEditor(text: $viewModel.content)
-                            .frame(height: 150)
-                            .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray.opacity(0.5)))
-                            .padding(.top, 8)
+                            .frame(minHeight: 150)
+                            .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.gray.opacity(0.5)))
+                            .padding(.vertical, 3)
                     }
                 }
             }

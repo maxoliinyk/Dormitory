@@ -12,10 +12,10 @@ import FirebaseFirestoreSwift
 struct UserNotificationView: View {
     @StateObject private var viewModel = NotificationsViewModel()
     @StateObject private var requestViewModel = RequestViewModel()
+    @ObservedObject var rootViewModel: RootViewModel
     @State private var showingNewRequestView = false
     @State private var showingAdminRequestView = false
     @State private var showingProfile = false
-    @Binding var showSignUpView: Bool
     var dormitoryID: String
     
     var body: some View {
@@ -39,12 +39,7 @@ struct UserNotificationView: View {
                 showingNewRequestView = true
             } label: {
                 Image(systemName: "plus")
-                    .font(.system(size: 28, weight: .bold))
-                    .foregroundColor(.white)
-                    .frame(width: 70, height: 70)
-                    .background(Color.blue)
-                    .clipShape(Circle())
-                    .shadow(radius: 10)
+                    .circleButton
 
             }
             .padding(.horizontal)
@@ -63,18 +58,18 @@ struct UserNotificationView: View {
                     showingProfile = true
                 }
                 .font(.headline)
-                .sheet(isPresented: $showingProfile) {
-                    NavigationView {
-                        ProfileView(showSignUpView: $showSignUpView)
-                    }
-                }
+            }
+        }
+        .sheet(isPresented: $showingProfile) {
+            NavigationStack {
+                ProfileView(rootViewModel: rootViewModel)
             }
         }
     }
 }
 
-#Preview {
-    NavigationView {
-        UserNotificationView(showSignUpView: .constant(false), dormitoryID: "dormitory1")
-    }
-}
+//#Preview {
+//    NavigationStack {
+//        UserNotificationView(showSignUpView: .constant(false), dormitoryID: "dormitory1")
+//    }
+//}

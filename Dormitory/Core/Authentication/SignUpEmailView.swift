@@ -8,9 +8,8 @@
 import SwiftUI
 
 struct SignUpEmailView: View {
-    
-    @StateObject var viewModel = SignUpEmailViewModel()
-    @Binding var showSignUpView: Bool
+    @ObservedObject var viewModel: AuthenticationViewModel
+    @ObservedObject var rootViewModel: RootViewModel
     
     private var isFormValid: Bool {
         !viewModel.email.isEmpty &&
@@ -25,24 +24,20 @@ struct SignUpEmailView: View {
             VStack {
                 TextField("Електронна адреса...", text: $viewModel.email)
                     .keyboardType(.emailAddress)
-                    .modifiedField()
+                    .modifiedField
                     .textInputAutocapitalization(.never)
-                    .autocorrectionDisabled(true)
                 
                 SecureField("Пароль...", text: $viewModel.password)
-                    .modifiedField()
+                    .modifiedField
                     .textInputAutocapitalization(.never)
-                    .autocorrectionDisabled(true)
                 
                 TextField("Імʼя...", text: $viewModel.name)
                     .keyboardType(.default)
-                    .modifiedField()
-                    .autocorrectionDisabled(true)
+                    .modifiedField
                 
                 TextField("Прізвище...", text: $viewModel.lastName)
                     .keyboardType(.default)
-                    .modifiedField()
-                    .autocorrectionDisabled(true)
+                    .modifiedField
                 
                 Picker("Гуртожиток", selection: $viewModel.dormitoryID) {
                     ForEach(DormitoryIDs.allCases) { dormitory in
@@ -51,21 +46,18 @@ struct SignUpEmailView: View {
                 }
                 .pickerStyle(.menu)
                 .frame(maxWidth: .infinity)
-                .modifiedField()
+                .modifiedField
                 
                 TextField("Номер кімнати...", text: $viewModel.roomNumber)
                     .keyboardType(.numberPad)
-                    .modifiedField()
-                    .autocorrectionDisabled(true)
+                    .modifiedField
                 
                 Button {
                     if isFormValid {
                         Task {
                             do {
                                 try await viewModel.signUp()
-                                print("User created successfully!")
-                                showSignUpView = false
-                                return
+                                await rootViewModel.loadUserData()
                             } catch {
                                 print("Error: \(error)")
                             }
@@ -73,15 +65,8 @@ struct SignUpEmailView: View {
                     }
                 } label: {
                     Text("Створити обліковий запис")
-                        .font(.headline)
-                        .foregroundStyle(.white)
-                        .frame(height: 55)
-                        .frame(maxWidth: .infinity)
-                        .background(Color.blue)
-                        .cornerRadius(10)
+                        .proceedButton
                 }
-                
-                Spacer()
             }
             .padding()
             .navigationTitle("Створення акаунту")
@@ -90,7 +75,7 @@ struct SignUpEmailView: View {
 }
 
 #Preview {
-    NavigationView {
-        SignUpEmailView(showSignUpView: .constant(true))
+    NavigationStack {
+        SignUpEmailView(viewModel: AuthenticationViewModel(), rootViewModel: RootViewModel())
     }
 }

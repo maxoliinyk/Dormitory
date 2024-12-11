@@ -19,24 +19,13 @@ struct NewRequestView: View {
     let addRequestAction: (String, String, String, String) async -> Void
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             Form {
                 Section(header: Text("Заголовок")) {
                     TextField("Введіть заголовок...", text: $title)
                 }
                 Section(header: Text("Зміст")) {
-                    ZStack(alignment: .topLeading) {
-                        if content.isEmpty {
-                            Text("Введіть ваше повідомлення...")
-                                .foregroundColor(Color.gray.opacity(0.6))
-                                .padding(.horizontal, 8)
-                                .padding(.vertical, 12)
-                        }
-                        TextEditor(text: $content)
-                            .frame(height: 150) // Adjust the height as needed
-                            .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray.opacity(0.5)))
-                            .padding(.top, 8)
-                    }
+                    TextField("Введіть ваше повідомлення...", text: $content, axis: .vertical)
                 }
             }
             .navigationTitle("Новий запит")

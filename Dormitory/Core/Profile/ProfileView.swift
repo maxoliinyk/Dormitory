@@ -11,9 +11,9 @@ import Firebase
 struct ProfileView: View {
     
     @StateObject private var viewModel = ProfileViewModel()
+    @ObservedObject var rootViewModel: RootViewModel
     @State private var showingSettings = false
     @State private var showingNewRequestView = false
-    @Binding var showSignUpView: Bool
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
@@ -136,8 +136,8 @@ struct ProfileView: View {
             }
         }
         .sheet(isPresented: $showingSettings) {
-            NavigationView {
-                SettingsView(showSignUpView: $showSignUpView)
+            NavigationStack {
+                SettingsView(rootViewModel: rootViewModel)
             }
         }
         .sheet(isPresented: $showingNewRequestView) {
@@ -179,8 +179,8 @@ struct ProfileView: View {
 }
 
 
-#Preview {
-    NavigationView {
-        ProfileView(showSignUpView: .constant(false))
-    }
-}
+//#Preview {
+//    NavigationStack {
+//        ProfileView(showSignUpView: .constant(false))
+//    }
+//}

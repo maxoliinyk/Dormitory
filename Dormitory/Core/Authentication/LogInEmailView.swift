@@ -8,47 +8,32 @@
 import SwiftUI
 
 struct LogInEmailView: View {
-    
-    @StateObject var viewModel = SignUpEmailViewModel()
-    @Binding var showSignUpView: Bool
-    @State private var showingAlert = false
-    @State private var alertMessage = ""
-    
+    @StateObject private var viewModel = AuthenticationViewModel()
+    @ObservedObject var rootViewModel: RootViewModel
+
     var body: some View {
         VStack {
             TextField("Електронна адреса...", text: $viewModel.email)
-                .modifiedField()
+                .modifiedField
             SecureField("Пароль...", text: $viewModel.password)
-                .modifiedField()
+                .modifiedField
             
             Button {
                 Task {
                     do {
                         try await viewModel.signIn()
-                        print("Successful log in!")
-                        showSignUpView = false
-                        return
+                        await rootViewModel.loadUserData()
                     } catch {
                         print("Error: \(error)")
-                        alertMessage = "Електронна адреса чи пароль невірні."
-                        showingAlert = true
                     }
                 }
             } label: {
                 Text("Увійти")
-                    .font(.headline)
-                    .foregroundStyle(.white)
-                    .frame(height: 55)
-                    .frame(maxWidth: .infinity)
-                    .background(Color.blue)
-                    .cornerRadius(10)
-            }
-            .alert(isPresented: $showingAlert) {
-                Alert(title: Text("Помилка авторизації"), message: Text(alertMessage), dismissButton: .default(Text("OK")))
+                    .proceedButton
             }
             
             NavigationLink {
-                SignUpEmailView(showSignUpView: $showSignUpView)
+                SignUpEmailView(viewModel: viewModel, rootViewModel: rootViewModel)
             } label: {
                 Text("Створити обліковий запис")
                     .font(.headline)
@@ -65,8 +50,9 @@ struct LogInEmailView: View {
     }
 }
 
+
 #Preview {
-    NavigationView {
-        LogInEmailView(showSignUpView: .constant(true))
+    NavigationStack {
+        LogInEmailView(rootViewModel: RootViewModel())
     }
 }

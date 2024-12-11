@@ -8,49 +8,31 @@
 import SwiftUI
 
 struct RootView: View {
-    
-    @State private var showSignUpView = false
-    @State private var isAdmin = false
-    @State private var dormitoryID: String?
-    @State private var isLoading = true
+    @StateObject private var viewModel = RootViewModel()
     
     var body: some View {
-        ZStack {
-            NavigationView {
-                if isLoading {
-                    ProgressView("Loading...")
-                } else {
-                    if isAdmin {
-                        AdminNotificationView(showSignUpView: $showSignUpView)
-                    } else {
-                        UserNotificationView(showSignUpView: $showSignUpView, dormitoryID: dormitoryID ?? "dormitory1")
+        Group {
+            if viewModel.isAuthenticated {
+                NavigationStack {
+                    Group {
+                        if viewModel.isAdmin {
+                            AdminNotificationView(rootViewModel: viewModel)
+                        } else {
+                            UserNotificationView(rootViewModel: viewModel, dormitoryID: viewModel.dormitoryID ?? "dormitory1")
+                        }
                     }
+                }
+            } else {
+                NavigationStack {
+                    LogInEmailView(rootViewModel: viewModel)
                 }
             }
         }
-        .onAppear() {
-            Task {
-                await loadUserData()
+        .overlay {
+            if viewModel.isLoading {
+                ProgressView("Loading...")
             }
         }
-        .fullScreenCover(isPresented: $showSignUpView) {
-            NavigationView {
-                LogInEmailView(showSignUpView: $showSignUpView)
-            }
-        }
-    }
-    
-    private func loadUserData() async {
-        do {
-            let authUser = try AuthManager.shared.getAuthenticatedUser()
-            let dbUser = try await UserManager.shared.getUser(userID: authUser.uid)
-            self.isAdmin = dbUser.isAdmin
-            self.dormitoryID = dbUser.dormitoryID
-        } catch {
-            print("Error fetching user data: \(error.localizedDescription)")
-            self.showSignUpView = true
-        }
-        self.isLoading = false
     }
 }
 
