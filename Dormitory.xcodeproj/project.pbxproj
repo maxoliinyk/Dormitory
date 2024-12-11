@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C438D8AF2D084DA900EEBB45 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C438D8AE2D084DA900EEBB45 /* TestView.swift */; };
 		C4477EB42BFDEEF600600F57 /* AdminNotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4477EB32BFDEEF600600F57 /* AdminNotificationView.swift */; };
 		C4477EBD2BFE4AE900600F57 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4477EBC2BFE4AE900600F57 /* NotificationManager.swift */; };
 		C4477EBF2BFF9A5200600F57 /* NewNotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4477EBE2BFF9A5200600F57 /* NewNotificationView.swift */; };
@@ -21,9 +22,10 @@
 		C45A95E72BF6877F0048B93B /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45A95E62BF6877F0048B93B /* RootView.swift */; };
 		C45A95E92BF6905D0048B93B /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45A95E82BF6905D0048B93B /* SettingsView.swift */; };
 		C45CC6AF2BFCBC9C00A19317 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45CC6AE2BFCBC9C00A19317 /* SettingsViewModel.swift */; };
-		C45CC6B52BFCBD8400A19317 /* SignUpEmailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45CC6B42BFCBD8400A19317 /* SignUpEmailViewModel.swift */; };
 		C45CC6B82BFCBDF400A19317 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45CC6B72BFCBDF400A19317 /* ProfileView.swift */; };
 		C45CC6BB2BFCC20000A19317 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45CC6BA2BFCC20000A19317 /* UserManager.swift */; };
+		C45CFD842D0747490066FBD6 /* RootViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45CFD832D0747490066FBD6 /* RootViewModel.swift */; };
+		C45CFD862D074B790066FBD6 /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45CFD852D074B790066FBD6 /* AuthenticationViewModel.swift */; };
 		C465B50A2BFCED120059CF12 /* CustomModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C465B5092BFCED120059CF12 /* CustomModifiers.swift */; };
 		C465B50E2BFCED700059CF12 /* LogInEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C465B50D2BFCED700059CF12 /* LogInEmailView.swift */; };
 		C465B5102BFD29D30059CF12 /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = C465B50F2BFD29D30059CF12 /* Database.swift */; };
@@ -44,6 +46,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C438D8AE2D084DA900EEBB45 /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
 		C4477EB32BFDEEF600600F57 /* AdminNotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminNotificationView.swift; sourceTree = "<group>"; };
 		C4477EBC2BFE4AE900600F57 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		C4477EBE2BFF9A5200600F57 /* NewNotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewNotificationView.swift; sourceTree = "<group>"; };
@@ -58,9 +61,10 @@
 		C45A95E62BF6877F0048B93B /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		C45A95E82BF6905D0048B93B /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		C45CC6AE2BFCBC9C00A19317 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
-		C45CC6B42BFCBD8400A19317 /* SignUpEmailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpEmailViewModel.swift; sourceTree = "<group>"; };
 		C45CC6B72BFCBDF400A19317 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		C45CC6BA2BFCC20000A19317 /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
+		C45CFD832D0747490066FBD6 /* RootViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootViewModel.swift; sourceTree = "<group>"; };
+		C45CFD852D074B790066FBD6 /* AuthenticationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModel.swift; sourceTree = "<group>"; };
 		C465B5092BFCED120059CF12 /* CustomModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomModifiers.swift; sourceTree = "<group>"; };
 		C465B50D2BFCED700059CF12 /* LogInEmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInEmailView.swift; sourceTree = "<group>"; };
 		C465B50F2BFD29D30059CF12 /* Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
@@ -135,6 +139,8 @@
 			isa = PBXGroup;
 			children = (
 				C45A95E62BF6877F0048B93B /* RootView.swift */,
+				C438D8AE2D084DA900EEBB45 /* TestView.swift */,
+				C45CFD832D0747490066FBD6 /* RootViewModel.swift */,
 				C45CC6B02BFCBCC800A19317 /* Authentication */,
 				C4477EB22BFDEEE000600F57 /* Notifications */,
 				C4477ECE2C02024B00600F57 /* Requests */,
@@ -159,7 +165,7 @@
 			children = (
 				C465B50D2BFCED700059CF12 /* LogInEmailView.swift */,
 				C45A95DE2BF5DF3A0048B93B /* SignUpEmailView.swift */,
-				C45CC6B42BFCBD8400A19317 /* SignUpEmailViewModel.swift */,
+				C45CFD852D074B790066FBD6 /* AuthenticationViewModel.swift */,
 			);
 			path = Authentication;
 			sourceTree = "<group>";
@@ -313,6 +319,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C438D8AF2D084DA900EEBB45 /* TestView.swift in Sources */,
 				C45A95E92BF6905D0048B93B /* SettingsView.swift in Sources */,
 				C465B50E2BFCED700059CF12 /* LogInEmailView.swift in Sources */,
 				C457FE5C2C032B67002DE4EF /* DormitoryEnums.swift in Sources */,
@@ -322,13 +329,13 @@
 				C45A95E72BF6877F0048B93B /* RootView.swift in Sources */,
 				C4477EC72C00F9AD00600F57 /* NotificationRow.swift in Sources */,
 				C49ED22B2BEA864C0041CBE1 /* DormitoryApp.swift in Sources */,
-				C45CC6B52BFCBD8400A19317 /* SignUpEmailViewModel.swift in Sources */,
 				C45CC6BB2BFCC20000A19317 /* UserManager.swift in Sources */,
 				C4477ED02C02026300600F57 /* RequestView.swift in Sources */,
 				C465B5102BFD29D30059CF12 /* Database.swift in Sources */,
 				C45A95DF2BF5DF3A0048B93B /* SignUpEmailView.swift in Sources */,
 				C465B5172BFD30480059CF12 /* DormitoriesManager.swift in Sources */,
 				C465B50A2BFCED120059CF12 /* CustomModifiers.swift in Sources */,
+				C45CFD862D074B790066FBD6 /* AuthenticationViewModel.swift in Sources */,
 				C4CA59122C020F0400B53241 /* NewRequestView.swift in Sources */,
 				C4CA590E2C020D4400B53241 /* RequestRow.swift in Sources */,
 				C45A95E52BF646D20048B93B /* AuthManager.swift in Sources */,
@@ -338,6 +345,7 @@
 				C45CC6B82BFCBDF400A19317 /* ProfileView.swift in Sources */,
 				C45CC6AF2BFCBC9C00A19317 /* SettingsViewModel.swift in Sources */,
 				C4CA59102C020D7200B53241 /* RequestViewModel.swift in Sources */,
+				C45CFD842D0747490066FBD6 /* RootViewModel.swift in Sources */,
 				C4477EB42BFDEEF600600F57 /* AdminNotificationView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -480,7 +488,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -510,7 +518,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
