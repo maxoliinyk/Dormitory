@@ -11,7 +11,7 @@ import FirebaseFirestoreSwift
 
 struct AdminNotificationView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
-    @StateObject private var viewModel = NotificationsViewModel()
+    @StateObject private var viewModel = NotificationViewModel()
     @StateObject private var requestViewModel = RequestViewModel()
     @State private var showingNewNotificationView = false
     @State private var showingProfile = false
@@ -24,7 +24,7 @@ struct AdminNotificationView: View {
                     ForEach(viewModel.notifications, id: \.notificationID) { notification in
                         NotificationRow(
                             notification: notification,
-                            formattedDate: viewModel.formatDate(from: notification.date),
+                            formattedDate: authViewModel.formatDate(from: notification.date),
                             isAdmin: true
                         ) {
                             viewModel.deleteNotification(notificationID: notification.notificationID)
@@ -67,12 +67,12 @@ struct AdminNotificationView: View {
         }
         .sheet(isPresented: $showingAdminRequestView) {
             NavigationStack {
-                RequestView()
+                RequestView(viewModel: requestViewModel)
             }
         }
         .sheet(isPresented: $showingProfile) {
             NavigationStack {
-                ProfileView()
+                ProfileView(requestViewModel: requestViewModel)
             }
         }
         .task {

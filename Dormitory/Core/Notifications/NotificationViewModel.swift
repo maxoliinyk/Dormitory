@@ -10,7 +10,7 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 @MainActor
-final class NotificationsViewModel: ObservableObject {
+final class NotificationViewModel: ObservableObject {
     @Published private(set) var notifications: [DBNotification] = []
     
     private func sortNotifications() {
@@ -56,13 +56,5 @@ final class NotificationsViewModel: ObservableObject {
                 print("Error deleting notification: \(error)")
             }
         }
-    }
-    
-    func formatDate(from timestamp: Timestamp) -> String {
-        let date = timestamp.dateValue()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .short
-        dateFormatter.timeStyle = .short
-        return dateFormatter.string(from: date)
     }
 }

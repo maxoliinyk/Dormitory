@@ -10,7 +10,7 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 struct RequestView: View {
-    @StateObject private var viewModel = RequestViewModel()
+    @ObservedObject var viewModel: RequestViewModel
     @State private var showingNewRequestView = false
     @State private var showingProfile = false
     
@@ -51,7 +51,6 @@ struct RequestView: View {
     }
 }
 
-// Preview
 //#Preview {
-//    RequestView(showSignUpView: .constant(false))
+//    RequestView()
 //}

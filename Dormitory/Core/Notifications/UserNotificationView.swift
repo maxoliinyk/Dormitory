@@ -11,7 +11,7 @@ import FirebaseFirestoreSwift
 
 struct UserNotificationView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
-    @StateObject private var viewModel = NotificationsViewModel()
+    @StateObject private var viewModel = NotificationViewModel()
     @StateObject private var requestViewModel = RequestViewModel()
     @State private var showingNewRequestView = false
     @State private var showingAdminRequestView = false
@@ -20,11 +20,11 @@ struct UserNotificationView: View {
     
     var body: some View {
         VStack {
-            ScrollView {
+            ScrollView { 
                 ForEach(viewModel.notifications.filter { $0.dormitoryID == dormitoryID.rawValue }, id: \.notificationID) { notification in
                     NotificationRow(
                         notification: notification,
-                        formattedDate: viewModel.formatDate(from: notification.date),
+                        formattedDate: authViewModel.formatDate(from: notification.date),
                         isAdmin: false
                     ) {
                         viewModel.deleteNotification(notificationID: notification.notificationID)
@@ -44,7 +44,7 @@ struct UserNotificationView: View {
             }
             .padding(.horizontal)
             .sheet(isPresented: $showingNewRequestView) {
-                NewRequestView(addRequestAction: requestViewModel.addNewRequest)
+                NewRequestView(viewModel: requestViewModel, addRequestAction: requestViewModel.addNewRequest)
             }
         }
         .task {
@@ -62,7 +62,7 @@ struct UserNotificationView: View {
         }
         .sheet(isPresented: $showingProfile) {
             NavigationStack {
-                ProfileView()
+                ProfileView(requestViewModel: requestViewModel)
             }
         }
     }

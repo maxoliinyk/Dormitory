@@ -10,6 +10,7 @@ import Firebase
 
 struct ProfileView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
+    @ObservedObject var requestViewModel: RequestViewModel
     @StateObject private var viewModel = ProfileViewModel()
     @State private var showingSettings = false
     @State private var showingNewRequestView = false
@@ -140,7 +141,7 @@ struct ProfileView: View {
             }
         }
         .sheet(isPresented: $showingNewRequestView) {
-            NewRequestView(addRequestAction: { dormitoryID, title, content, roomNumber in
+            NewRequestView(viewModel: requestViewModel, addRequestAction: { dormitoryID, title, content, roomNumber in
                 do {
                     // Make sure user is loaded
                     guard let user = viewModel.user else {

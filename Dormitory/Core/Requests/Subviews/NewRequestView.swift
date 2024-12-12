@@ -9,7 +9,7 @@ import SwiftUI
 import Firebase
 
 struct NewRequestView: View {
-    @StateObject private var viewModel = RequestViewModel()
+    @ObservedObject var viewModel: RequestViewModel
     @Environment(\.dismiss) var dismiss
     @Environment(\.presentationMode) var presentationMode
     @State private var title = ""
