@@ -11,7 +11,7 @@ import FirebaseFirestoreSwift
 
 struct UserNotificationView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
-    @StateObject private var viewModel = NotificationViewModel()
+    @StateObject private var notificationViewModel = NotificationViewModel()
     @StateObject private var requestViewModel = RequestViewModel()
     @State private var showingNewRequestView = false
     @State private var showingAdminRequestView = false
@@ -20,15 +20,16 @@ struct UserNotificationView: View {
     
     var body: some View {
         VStack {
-            ScrollView { 
-                ForEach(viewModel.notifications.filter { $0.dormitoryID == dormitoryID.rawValue }, id: \.notificationID) { notification in
+            ScrollView {
+                ForEach(notificationViewModel.notifications.filter { $0.dormitoryID == dormitoryID.rawValue }, id: \.notificationID) { notification in
                     NotificationRow(
                         notification: notification,
                         formattedDate: authViewModel.formatDate(from: notification.date),
                         isAdmin: false
                     ) {
-                        viewModel.deleteNotification(notificationID: notification.notificationID)
-                    }
+                        Task {
+                            await notificationViewModel.deleteNotification(notificationID: notification.notificationID)
+                        }                    }
                 }
             }
             .padding()
@@ -40,20 +41,20 @@ struct UserNotificationView: View {
             } label: {
                 Image(systemName: "plus")
                     .circleButton
-
+                
             }
             .padding(.horizontal)
             .sheet(isPresented: $showingNewRequestView) {
-                NewRequestView(viewModel: requestViewModel, addRequestAction: requestViewModel.addNewRequest)
+                NewRequestView(requestViewModel: requestViewModel, addRequestAction: requestViewModel.addNewRequest)
             }
         }
         .task {
-            await viewModel.loadNotifications()
+            await notificationViewModel.loadNotifications()
             await requestViewModel.loadCurrentUser()
             await requestViewModel.loadRequests()
         }
         .toolbar {
-            ToolbarItemGroup(placement: .topBarTrailing) {                
+            ToolbarItemGroup(placement: .topBarTrailing) {
                 Button ("Profile", systemImage: "person.circle") {
                     showingProfile = true
                 }
