@@ -9,7 +9,7 @@ import SwiftUI
 import Firebase
 
 struct NewRequestView: View {
-    @ObservedObject var viewModel: RequestViewModel
+    @ObservedObject var requestViewModel: RequestViewModel
     @Environment(\.dismiss) var dismiss
     @Environment(\.presentationMode) var presentationMode
     @State private var title = ""
@@ -39,8 +39,8 @@ struct NewRequestView: View {
                 ToolbarItemGroup(placement: .confirmationAction) {
                     Button("Надіслати") {
                         Task {
-                            let dormitoryID = viewModel.currentUser?.dormitoryID ?? "err"
-                            let roomNumber = viewModel.currentUser?.roomNumber ?? "err"
+                            let dormitoryID = requestViewModel.currentUser?.dormitoryID ?? "err"
+                            let roomNumber = requestViewModel.currentUser?.roomNumber ?? "err"
                             await addRequestAction(dormitoryID, title, content, roomNumber)
                             dismiss()
                         }

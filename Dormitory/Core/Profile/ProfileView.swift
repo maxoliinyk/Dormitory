@@ -11,15 +11,15 @@ import Firebase
 struct ProfileView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
     @ObservedObject var requestViewModel: RequestViewModel
-    @StateObject private var viewModel = ProfileViewModel()
+    @StateObject private var profileViewModel = ProfileViewModel()
     @State private var showingSettings = false
     @State private var showingNewRequestView = false
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
         ZStack {
-            if let user = viewModel.user,
-               let dormitory = viewModel.dormitory,
+            if let user = profileViewModel.user,
+               let dormitory = profileViewModel.dormitory,
                let dormitoryID = DormitoryIDs(rawValue: user.dormitoryID) { // Use the unified DormitoryIDs enum
                 
                 ScrollView {
@@ -76,7 +76,7 @@ struct ProfileView: View {
                         .padding(.horizontal)
                     
                     // Requests (if not admin)
-                    if !viewModel.isAdmin {
+                    if !profileViewModel.isAdmin {
                         VStack(alignment: .leading) {
                             Text("Запити мого гуртожитку")
                                 .font(.title2.bold())
@@ -86,7 +86,7 @@ struct ProfileView: View {
                                 .padding(.bottom)
                                 .padding(.horizontal)
                             
-                            ForEach(viewModel.requests) { request in
+                            ForEach(profileViewModel.requests) { request in
                                 
                                 
                                 HStack {
@@ -107,7 +107,7 @@ struct ProfileView: View {
                                 .padding(.bottom, 10)
                             }
                             
-                            if viewModel.requests.isEmpty {
+                            if profileViewModel.requests.isEmpty {
                                 Text("Не знайдено жодного запиту.")
                                     .font(.subheadline)
                                     .padding()
@@ -118,7 +118,7 @@ struct ProfileView: View {
             }
         }
         .task {
-            try? await viewModel.loadCurrentUser()
+            try? await profileViewModel.loadCurrentUser()
         }
         .navigationTitle("Профіль")
         .navigationBarTitleDisplayMode(.inline)
@@ -141,10 +141,10 @@ struct ProfileView: View {
             }
         }
         .sheet(isPresented: $showingNewRequestView) {
-            NewRequestView(viewModel: requestViewModel, addRequestAction: { dormitoryID, title, content, roomNumber in
+            NewRequestView(requestViewModel: requestViewModel, addRequestAction: { dormitoryID, title, content, roomNumber in
                 do {
                     // Make sure user is loaded
-                    guard let user = viewModel.user else {
+                    guard let user = profileViewModel.user else {
                         print("User not loaded")
                         return
                     }
@@ -167,7 +167,7 @@ struct ProfileView: View {
                     try await RequestManager.shared.uploadRequest(request: request)
                     
                     // Refresh the data
-                    try await viewModel.loadCurrentUser()
+                    try await profileViewModel.loadCurrentUser()
                 } catch {
                     // Handle the error appropriately (e.g., show an alert)
                     print("Failed to add request or load current user: \(error)")
