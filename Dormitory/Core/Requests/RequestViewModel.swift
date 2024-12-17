@@ -12,75 +12,47 @@ import FirebaseFirestoreSwift
 
 @MainActor
 final class RequestViewModel: ObservableObject {
-    @Published var requests: [DBRequest] = []
-    @Published var currentUser: DBUser?
-    @Published var content: String = "" // Add this line
-
-    private let requestCollection = Firestore.firestore().collection("requests")
-
-    func loadRequests() async {
-        do {
-            let snapshot = try await requestCollection.getDocuments()
-            self.requests = snapshot.documents.compactMap { document in
-                try? document.data(as: DBRequest.self)
-            }
-        } catch {
-            print("Error loading requests: \(error)")
-        }
+    @Published private(set) var requests: [DBRequest] = []
+    @Published private(set) var currentUser: DBUser?
+    
+    private let requestManager = RequestManager.shared
+    private let userManager = UserManager.shared
+    
+    func loadRequests() async throws {
+        requests = try await requestManager.getRequests()
     }
-
+    
     func formatDate(from timestamp: Timestamp) -> String {
-        let date = timestamp.dateValue()
         let formatter = DateFormatter()
         formatter.dateStyle = .short
-        formatter.timeStyle = .short // You can use .medium or .long for different time formats
-        return formatter.string(from: date)
+        formatter.timeStyle = .short
+        return formatter.string(from: timestamp.dateValue())
     }
-
-    func addNewRequest(dormitoryID: String, title: String, content: String, roomNumber: String) async {
-        guard let currentUser = currentUser else { return }
-
-        let newRequest = generateRequest(dormitoryID: currentUser.dormitoryID, title: title, content: content, roomNumber: currentUser.roomNumber ?? "nan")
-
-        do {
-            try requestCollection.document(newRequest.requestID).setData(from: newRequest)
-            await loadRequests()
-        } catch {
-            print("Error adding request: \(error)")
-        }
-    }
-
-    private func generateRequest(dormitoryID: String, title: String, content: String, roomNumber: String) -> DBRequest {
-        DBRequest(
+    
+    func addRequest(title: String, content: String) async throws {
+        guard let user = currentUser else { return }
+        
+        let request = DBRequest(
             requestID: UUID().uuidString,
-            dormitoryID: dormitoryID,
+            dormitoryID: user.dormitoryID,
             title: title,
             content: content,
-            postedBy: "\(currentUser?.name ?? "") \(currentUser?.lastName ?? "")",
-            roomNumber: roomNumber,
+            postedBy: "\(user.name ?? "") \(user.lastName ?? "")",
+            roomNumber: user.roomNumber ?? "н/д",
             date: Timestamp(date: Date())
         )
+        
+        try await requestManager.uploadRequest(request: request)
+        try await loadRequests()
     }
-
-    func deleteRequest(requestID: String) async {
-        do {
-            try await requestCollection.document(requestID).delete()
-            await loadRequests() // Refresh the list of requests after deletion
-        } catch {
-            print("Error deleting request: \(error)")
-        }
+    
+    func deleteRequest(requestID: String) async throws {
+        try await requestManager.deleteRequest(requestID: requestID)
+        try await loadRequests()
     }
-
-    func loadCurrentUser() async {
-        guard let firebaseUser = Auth.auth().currentUser else {
-            print("No user signed in")
-            return
-        }
-
-        do {
-            self.currentUser = try await UserManager.shared.getUser(userID: firebaseUser.uid)
-        } catch {
-            print("Error fetching user data: \(error)")
-        }
+    
+    func loadCurrentUser() async throws {
+        let authUser = try AuthManager.shared.getAuthenticatedUser()
+        currentUser = try await userManager.getUser(userID: authUser.uid)
     }
 }

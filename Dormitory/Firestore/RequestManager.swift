@@ -24,7 +24,6 @@ struct DBRequest: Codable, Equatable, Identifiable {
 }
 
 final class RequestManager {
-
     static let shared = RequestManager()
     private init() { }
 
@@ -34,50 +33,38 @@ final class RequestManager {
         requestCollection.document(id)
     }
 
+    // MARK: - Upload
     func uploadRequest(request: DBRequest) async throws {
         try requestCollection.addDocument(from: request)
     }
     
+    // MARK: - Get
     func getRequest(id: String) async throws -> DBRequest {
         try await requestDocument(id: id).getDocument(as: DBRequest.self)
     }
-
-    func fetchAllRequests() async throws -> [DBRequest] {
-        var requests: [DBRequest] = []
-        
-        do {
-            let querySnapshot = try await requestCollection.getDocuments()
-            requests = try querySnapshot.documents.compactMap { document in
-                try document.data(as: DBRequest.self)
-            }
-        } catch {
-            print("Error fetching requests: \(error)")
-            throw error
-        }
-        
-        return requests
+    
+    func getRequests() async throws -> [DBRequest] {
+        try await fetchAllRequests()
     }
     
+    func getRequests(forDormitoryID dormitoryID: String) async throws -> [DBRequest] {
+        let snapshot = try await requestCollection
+            .whereField("dormitoryID", isEqualTo: dormitoryID)
+            .getDocuments()
+        return try snapshot.documents.compactMap { try $0.data(as: DBRequest.self) }
+    }
+
+    func fetchAllRequests() async throws -> [DBRequest] {
+        let snapshot = try await requestCollection.getDocuments()
+        return try snapshot.documents.compactMap { try $0.data(as: DBRequest.self) }
+    }
+    
+    // MARK: - Delete
     func deleteRequest(requestID: String) async throws {
         try await requestDocument(id: requestID).delete()
     }
 
-    func getRequests(forDormitoryID dormitoryID: String) async throws -> [DBRequest] {
-        var requests: [DBRequest] = []
-        
-        do {
-            let querySnapshot = try await requestCollection.whereField("dormitoryID", isEqualTo: dormitoryID).getDocuments()
-            requests = try querySnapshot.documents.compactMap { document in
-                try document.data(as: DBRequest.self)
-            }
-        } catch {
-            print("Error fetching requests for dormitory ID \(dormitoryID): \(error)")
-            throw error
-        }
-        
-        return requests
-    }
-
+    // MARK: - Helpers
     private func convertDateStringToTimestamp(dateString: String) -> Timestamp? {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"

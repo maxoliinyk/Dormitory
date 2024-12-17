@@ -27,7 +27,7 @@ struct RequestView: View {
                                 dormitoryID: dormitoryID // Pass the valid dormitoryID
                             ) {
                                 Task {
-                                    await requestViewModel.deleteRequest(requestID: request.requestID)
+                                    try await requestViewModel.deleteRequest(requestID: request.requestID)
                                 }
                             }
                         } else {
@@ -44,8 +44,8 @@ struct RequestView: View {
         .navigationTitle("Запити")
         .onAppear {
             Task {
-                await requestViewModel.loadCurrentUser()
-                await requestViewModel.loadRequests()
+                try await requestViewModel.loadCurrentUser()
+                try await requestViewModel.loadRequests()
             }
         }
     }
