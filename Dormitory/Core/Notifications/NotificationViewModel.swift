@@ -1,5 +1,5 @@
 //
-//  NotificationsViewModel.swift
+//  NotificationViewModel.swift
 //  Dormitory
 //
 //  Created by Max Oliinyk on 24.05.2024.
@@ -12,9 +12,21 @@ import FirebaseFirestoreSwift
 @MainActor
 final class NotificationViewModel: ObservableObject {
     @Published private(set) var notifications: [DBNotification] = []
+    @Published var newNotification = NewNotification() // Encapsulate new notification data
     
-    private func sortNotifications() {
-        notifications.sort { $0.date.dateValue() > $1.date.dateValue() }
+    // Nested Types
+    struct NewNotification {
+        var dormitoryID: DormitoryIDs = .dormitory1
+        var title: String = ""
+        var content: String = ""
+        var postedBy: String = ""
+        
+        mutating func reset() {
+            dormitoryID = .dormitory1
+            title = ""
+            content = ""
+            postedBy = ""
+        }
     }
     
     func loadNotifications() async {
@@ -26,35 +38,40 @@ final class NotificationViewModel: ObservableObject {
         }
     }
     
-    func addNewNotification(dormitoryID: String, title: String, content: String, postedBy: String) {
-        let newNotification = DBNotification(
+    func addNotification() async {
+        let notification = DBNotification(
             notificationID: UUID().uuidString,
-            dormitoryID: dormitoryID,
-            title: title,
-            content: content,
-            postedBy: postedBy,
+            dormitoryID: newNotification.dormitoryID.rawValue,
+            title: newNotification.title,
+            content: newNotification.content,
+            postedBy: newNotification.postedBy,
             date: Timestamp(date: Date())
         )
         
-        Task {
-            do {
-                try await NotificationManager.shared.uploadNotification(notification: newNotification)
-                notifications.append(newNotification)
-                sortNotifications()
-            } catch {
-                print("Error uploading notification: \(error)")
-            }
+        do {
+            try await NotificationManager.shared.uploadNotification(notification: notification)
+            notifications.append(notification)
+            sortNotifications()
+            newNotification.reset() // Reset form after successful addition
+        } catch {
+            print("Error uploading notification: \(error)")
         }
     }
     
-    func deleteNotification(notificationID: String) {
-        Task {
-            do {
-                try await NotificationManager.shared.deleteNotification(notificationID: notificationID)
-                notifications.removeAll { $0.notificationID == notificationID }
-            } catch {
-                print("Error deleting notification: \(error)")
-            }
+    func deleteNotification(notificationID: String) async {
+        do {
+            try await NotificationManager.shared.deleteNotification(notificationID: notificationID)
+            notifications.removeAll { $0.notificationID == notificationID }
+        } catch {
+            print("Error deleting notification: \(error)")
         }
+    }
+    
+    func setCurrentUserName(_ userName: String) {
+        newNotification.postedBy = userName
+    }
+    
+    private func sortNotifications() {
+        notifications.sort { $0.date.dateValue() > $1.date.dateValue() }
     }
 }

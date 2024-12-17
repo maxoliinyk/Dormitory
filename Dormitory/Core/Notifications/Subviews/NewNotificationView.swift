@@ -8,51 +8,31 @@
 import SwiftUI
 import FirebaseAuth
 
-@MainActor
-final class NewNotificationViewModel: ObservableObject {
-    @Published var dormitoryID: DormitoryIDs = .dormitory1 // Updated to use Dormitory enum
-    @Published var title: String = ""
-    @Published var content: String = ""
-    @Published var postedBy: String = ""
-    
-    func setCurrentUserName(_ userName: String) {
-        self.postedBy = userName
-    }
-    
-    func resetFields() {
-        dormitoryID = .dormitory1
-        title = ""
-        content = ""
-        postedBy = ""
-    }
-}
-
 struct NewNotificationView: View {
-    @StateObject private var viewModel = NewNotificationViewModel()
-    var onSave: (DormitoryIDs, String, String, String) -> Void
-    @Environment(\.dismiss) private var dismiss
+    @ObservedObject var notificationViewModel: NotificationViewModel
+    @Environment(\.dismiss) var dismiss
     
     var body: some View {
         NavigationStack {
             Form {
                 Section(header: Text("Деталі")) {
-                    Picker("Гуртожиток", selection: $viewModel.dormitoryID) {
+                    Picker("Гуртожиток", selection: $notificationViewModel.newNotification.dormitoryID) {
                         ForEach(DormitoryIDs.allCases, id: \.self) { dormitory in
                             Text(dormitory.displayName).tag(dormitory)
                         }
                     }
                     .pickerStyle(.menu)
                     
-                    TextField("Заголовок...", text: $viewModel.title)
+                    TextField("Заголовок...", text: $notificationViewModel.newNotification.title)
                 }
                 Section(header: Text("Повідомлення")) {
                     ZStack(alignment: .topLeading) {
-                        if viewModel.content.isEmpty {
+                        if notificationViewModel.newNotification.content.isEmpty {
                             Text("Введіть ваше повідомлення...")
                                 .foregroundColor(Color.gray.opacity(0.6))
                                 .padding(5)
                         }
-                        TextEditor(text: $viewModel.content)
+                        TextEditor(text: $notificationViewModel.newNotification.content)
                             .frame(minHeight: 150)
                             .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.gray.opacity(0.5)))
                             .padding(.vertical, 3)
@@ -68,10 +48,12 @@ struct NewNotificationView: View {
                 }
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Надіслати") {
-                        onSave(viewModel.dormitoryID, viewModel.title, viewModel.content, viewModel.postedBy)
-                        dismiss()
+                        Task {
+                            await notificationViewModel.addNotification()
+                            dismiss()
+                        }
                     }
-                    .disabled(viewModel.title.isEmpty || viewModel.content.isEmpty)
+                    .disabled(notificationViewModel.newNotification.title.isEmpty || notificationViewModel.newNotification.content.isEmpty)
                 }
             }
             .onAppear {
@@ -80,10 +62,10 @@ struct NewNotificationView: View {
                         do {
                             let user = try await UserManager.shared.getUser(userID: userID)
                             if let userName = user.name, let userLastName = user.lastName {
-                                viewModel.setCurrentUserName("\(userName) \(userLastName)")
+                                notificationViewModel.setCurrentUserName("\(userName) \(userLastName)")
                             } else {
                                 // Handle case where user name or last name is not available
-                                viewModel.setCurrentUserName("Unknown User")
+                                notificationViewModel.setCurrentUserName("Unknown User")
                             }
                         } catch {
                             // Handle error appropriately
@@ -99,11 +81,11 @@ struct NewNotificationView: View {
     }
 }
 
-#Preview {
-    NewNotificationView { dormitoryID, title, content, postedBy in
-        print("Dormitory ID: \(dormitoryID)")
-        print("Title: \(title)")
-        print("Content: \(content)")
-        print("Posted By: \(postedBy)")
-    }
-}
+//#Preview {
+//    NewNotificationView { dormitoryID, title, content, postedBy in
+//        print("Dormitory ID: \(dormitoryID)")
+//        print("Title: \(title)")
+//        print("Content: \(content)")
+//        print("Posted By: \(postedBy)")
+//    }
+//}

@@ -11,7 +11,7 @@ import FirebaseFirestoreSwift
 
 struct AdminNotificationView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
-    @StateObject private var viewModel = NotificationViewModel()
+    @StateObject private var notificationViewModel = NotificationViewModel()
     @StateObject private var requestViewModel = RequestViewModel()
     @State private var showingNewNotificationView = false
     @State private var showingProfile = false
@@ -21,13 +21,15 @@ struct AdminNotificationView: View {
         ZStack {
             VStack {
                 ScrollView {
-                    ForEach(viewModel.notifications, id: \.notificationID) { notification in
+                    ForEach(notificationViewModel.notifications, id: \.notificationID) { notification in
                         NotificationRow(
                             notification: notification,
                             formattedDate: authViewModel.formatDate(from: notification.date),
                             isAdmin: true
                         ) {
-                            viewModel.deleteNotification(notificationID: notification.notificationID)
+                            Task {
+                                await notificationViewModel.deleteNotification(notificationID: notification.notificationID)
+                            }
                         }
                     }
                 }
@@ -36,21 +38,8 @@ struct AdminNotificationView: View {
                 Spacer()
             }
             .overlay(alignment: .bottomTrailing) {
-                Button {
+                AddButton {
                     showingNewNotificationView = true
-                } label: {
-                    Image(systemName: "plus")
-                        .circleButton
-                }
-                .padding(.horizontal)
-                .sheet(isPresented: $showingNewNotificationView) {
-                    NewNotificationView {
-                        dormitoryID,
-                        title,
-                        content,
-                        postedBy in
-                        viewModel.addNewNotification(dormitoryID: dormitoryID.rawValue, title: title, content: content, postedBy: postedBy)
-                    }
                 }
             }
         }
@@ -67,7 +56,7 @@ struct AdminNotificationView: View {
         }
         .sheet(isPresented: $showingAdminRequestView) {
             NavigationStack {
-                RequestView(viewModel: requestViewModel)
+                RequestView(requestViewModel: requestViewModel)
             }
         }
         .sheet(isPresented: $showingProfile) {
@@ -75,11 +64,15 @@ struct AdminNotificationView: View {
                 ProfileView(requestViewModel: requestViewModel)
             }
         }
-        .task {
-            await viewModel.loadNotifications()
-            await requestViewModel.loadCurrentUser()
-            await requestViewModel.loadRequests()
+        .sheet(isPresented: $showingNewNotificationView) {
+            NewNotificationView(notificationViewModel: notificationViewModel)
         }
+        .task {
+            await notificationViewModel.loadNotifications()
+            try? await requestViewModel.loadCurrentUser()
+            try? await requestViewModel.loadRequests()
+        }
+
     }
 }
 

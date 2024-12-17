@@ -10,7 +10,7 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 struct RequestView: View {
-    @ObservedObject var viewModel: RequestViewModel
+    @ObservedObject var requestViewModel: RequestViewModel
     @State private var showingNewRequestView = false
     @State private var showingProfile = false
     
@@ -18,16 +18,16 @@ struct RequestView: View {
         ZStack {
             VStack {
                 ScrollView {
-                    ForEach(viewModel.requests, id: \.requestID) { request in
+                    ForEach(requestViewModel.requests, id: \.requestID) { request in
                         if let dormitoryID = DormitoryIDs(rawValue: request.dormitoryID) { // Ensure dormitoryID is valid
                             RequestRow(
                                 request: request,
-                                formattedDate: viewModel.formatDate(from: request.date),
-                                isAdmin: viewModel.currentUser?.isAdmin ?? false,
+                                formattedDate: requestViewModel.formatDate(from: request.date),
+                                isAdmin: requestViewModel.currentUser?.isAdmin ?? false,
                                 dormitoryID: dormitoryID // Pass the valid dormitoryID
                             ) {
                                 Task {
-                                    await viewModel.deleteRequest(requestID: request.requestID)
+                                    try await requestViewModel.deleteRequest(requestID: request.requestID)
                                 }
                             }
                         } else {
@@ -44,13 +44,13 @@ struct RequestView: View {
         .navigationTitle("Запити")
         .onAppear {
             Task {
-                await viewModel.loadCurrentUser()
-                await viewModel.loadRequests()
+                try await requestViewModel.loadCurrentUser()
+                try await requestViewModel.loadRequests()
             }
         }
     }
 }
 
-//#Preview {
-//    RequestView()
-//}
+#Preview {
+    RequestView(requestViewModel: RequestViewModel())
+}
