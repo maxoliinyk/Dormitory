@@ -13,107 +13,20 @@ struct ProfileView: View {
     @ObservedObject var requestViewModel: RequestViewModel
     @StateObject private var profileViewModel = ProfileViewModel()
     @State private var showingSettings = false
-    @State private var showingNewRequestView = false
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
-        ZStack {
+        ScrollView {
             if let user = profileViewModel.user,
                let dormitory = profileViewModel.dormitory,
-               let dormitoryID = DormitoryIDs(rawValue: user.dormitoryID) { // Use the unified DormitoryIDs enum
+               let dormitoryID = DormitoryIDs(rawValue: user.dormitoryID) {
                 
-                ScrollView {
-                    // Profile
-                    VStack {
-                        Image(systemName: "person.circle")
-                            .resizable()
-                            .scaledToFit()
-                            .font(.caption2)
-                            .padding(.horizontal, 100)
-                            .shadow(radius: 10)
-                        
-                        Text("\(String(user.name ?? "")) \(String(user.lastName ?? ""))")
-                            .font(.title.bold())
-                        Text("\(dormitoryID.displayName) • \(String(user.roomNumber ?? "")) кімната") // Use displayName from DormitoryIDs
-                            .font(.footnote)
-                            .padding(.bottom, 15)
-                        
-
-                    }
-                    .padding(.bottom, 10)
-                    
-                    Divider()
-                        .padding(.horizontal)
-                    
-                    // Dormitory
-                    HStack {
-                        VStack(alignment: .leading) {
-                            Text("Мій гуртожиток:")
-                                .font(.title2.bold())
-                            Text(dormitory.address)
-                                .font(.callout)
-                            Text("м. Київ")
-                                .font(.caption)
-                        }
-                        .padding()
-                        
-                        Spacer()
-                        
-                        VStack {
-                            Text(dormitory.number)
-                                .font(.largeTitle)
-                        }
-                        .padding()
-                    }
-                    .frame(maxWidth: .infinity)
-                    .frame(height: 110)
-                    .background(.ultraThickMaterial)
-                    .cornerRadius(10)
-                    .shadow(radius: 10)
-                    .padding()
-                    
-                    Divider()
-                        .padding(.horizontal)
-                    
-                    // Requests (if not admin)
-                    if !profileViewModel.isAdmin {
-                        VStack(alignment: .leading) {
-                            Text("Запити мого гуртожитку")
-                                .font(.title2.bold())
-                                .padding(.leading)
-                            
-                            Divider()
-                                .padding(.bottom)
-                                .padding(.horizontal)
-                            
-                            ForEach(profileViewModel.requests) { request in
-                                
-                                
-                                HStack {
-                                    VStack(alignment: .leading) {
-                                        Text(request.title)
-                                            .font(.title2.bold())
-                                        Text(request.content)
-                                            .font(.callout)
-                                    }
-                                    .padding()
-                                    Spacer()
-                                }
-                                .frame(maxWidth: .infinity)
-                                .background(.ultraThickMaterial)
-                                .cornerRadius(10)
-                                .shadow(radius: 10)
-                                .padding(.horizontal)
-                                .padding(.bottom, 10)
-                            }
-                            
-                            if profileViewModel.requests.isEmpty {
-                                Text("Не знайдено жодного запиту.")
-                                    .font(.subheadline)
-                                    .padding()
-                            }
-                        }
-                    }
+                ProfileHeader(user: user, dormitoryID: dormitoryID)
+                
+                DormitorySection(dormitory: dormitory)
+                
+                if !profileViewModel.isAdmin {
+                    RequestsSection(requests: profileViewModel.requests)
                 }
             }
         }
@@ -123,16 +36,11 @@ struct ProfileView: View {
         .navigationTitle("Профіль")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarItemGroup(placement: .topBarLeading) {
-                Button("Settings", systemImage: "gear") {
-                    showingSettings = true
-                }
-                .font(.headline)
+            ToolbarItem(placement: .topBarLeading) {
+                SettingsButton(showingSettings: $showingSettings)
             }
-            ToolbarItemGroup(placement: .topBarTrailing) {
-                Button("Готово") {
-                    dismiss()
-                }
+            ToolbarItem(placement: .topBarTrailing) {
+                DismissButton(dismiss: dismiss)
             }
         }
         .sheet(isPresented: $showingSettings) {
@@ -140,43 +48,9 @@ struct ProfileView: View {
                 SettingsView()
             }
         }
-        .sheet(isPresented: $showingNewRequestView) {
-            NewRequestView(requestViewModel: requestViewModel, addRequestAction: { dormitoryID, title, content, roomNumber in
-                do {
-                    // Make sure user is loaded
-                    guard let user = profileViewModel.user else {
-                        print("User not loaded")
-                        return
-                    }
-                    
-                    // Combine name and lastName to form postedBy string
-                    let postedBy = "\(user.name ?? "Студент") \(user.lastName ?? "")"
-                    
-                    // Create a new DBRequest object
-                    let request = DBRequest(
-                        requestID: UUID().uuidString,
-                        dormitoryID: dormitoryID,
-                        title: title,
-                        content: content,
-                        postedBy: postedBy, // Use combined name and last name
-                        roomNumber: roomNumber,
-                        date: Timestamp(date: Date())
-                    )
-                    
-                    // Upload the request
-                    try await RequestManager.shared.uploadRequest(request: request)
-                    
-                    // Refresh the data
-                    try await profileViewModel.loadCurrentUser()
-                } catch {
-                    // Handle the error appropriately (e.g., show an alert)
-                    print("Failed to add request or load current user: \(error)")
-                }
-            })
-        }
-
     }
 }
+
 
 
 //#Preview {
