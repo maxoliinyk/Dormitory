@@ -14,7 +14,6 @@ struct UserNotificationView: View {
     @StateObject private var notificationViewModel = NotificationViewModel()
     @StateObject private var requestViewModel = RequestViewModel()
     @State private var showingNewRequestView = false
-    @State private var showingAdminRequestView = false
     @State private var showingProfile = false
     var dormitoryID: DormitoryIDs
     
@@ -29,43 +28,40 @@ struct UserNotificationView: View {
                     ) {
                         Task {
                             await notificationViewModel.deleteNotification(notificationID: notification.notificationID)
-                        }                    }
+                        }
+                    }
                 }
             }
             .padding()
         }
         .navigationTitle("Оголошення")
         .overlay(alignment: .bottomTrailing) {
-            Button {
+            AddButton {
                 showingNewRequestView = true
-            } label: {
-                Image(systemName: "plus")
-                    .circleButton
-                
-            }
-            .padding(.horizontal)
-            .sheet(isPresented: $showingNewRequestView) {
-                NewRequestView(requestViewModel: requestViewModel, addRequestAction: requestViewModel.addNewRequest)
             }
         }
-        .task {
-            await notificationViewModel.loadNotifications()
-            await requestViewModel.loadCurrentUser()
-            await requestViewModel.loadRequests()
-        }
-        .toolbar {
-            ToolbarItemGroup(placement: .topBarTrailing) {
-                Button ("Profile", systemImage: "person.circle") {
-                    showingProfile = true
-                }
-                .font(.headline)
-            }
+        .sheet(isPresented: $showingNewRequestView) {
+            NewRequestView(requestViewModel: requestViewModel)
         }
         .sheet(isPresented: $showingProfile) {
             NavigationStack {
                 ProfileView(requestViewModel: requestViewModel)
             }
         }
+        .task {
+            try? await loadInitialData()
+        }
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                ProfileButton(showingProfile: $showingProfile)
+            }
+        }
+    }
+    
+    private func loadInitialData() async throws {
+        await notificationViewModel.loadNotifications()
+        try await requestViewModel.loadCurrentUser()
+        try await requestViewModel.loadRequests()
     }
 }
 

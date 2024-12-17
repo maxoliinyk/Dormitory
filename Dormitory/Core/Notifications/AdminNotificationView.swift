@@ -38,15 +38,8 @@ struct AdminNotificationView: View {
                 Spacer()
             }
             .overlay(alignment: .bottomTrailing) {
-                Button {
+                AddButton {
                     showingNewNotificationView = true
-                } label: {
-                    Image(systemName: "plus")
-                        .circleButton
-                }
-                .padding(.horizontal)
-                .sheet(isPresented: $showingNewNotificationView) {
-                    NewNotificationView(notificationViewModel: notificationViewModel)
                 }
             }
         }
@@ -71,11 +64,15 @@ struct AdminNotificationView: View {
                 ProfileView(requestViewModel: requestViewModel)
             }
         }
+        .sheet(isPresented: $showingNewNotificationView) {
+            NewNotificationView(notificationViewModel: notificationViewModel)
+        }
         .task {
             await notificationViewModel.loadNotifications()
-            await requestViewModel.loadCurrentUser()
-            await requestViewModel.loadRequests()
+            try? await requestViewModel.loadCurrentUser()
+            try? await requestViewModel.loadRequests()
         }
+
     }
 }
 
