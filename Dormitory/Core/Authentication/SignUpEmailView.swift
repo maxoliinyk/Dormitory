@@ -11,11 +11,16 @@ struct SignUpEmailView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
 
     private var isFormValid: Bool {
-        !authViewModel.email.isEmpty &&
-        !authViewModel.password.isEmpty &&
-        !authViewModel.name.isEmpty &&
-        !authViewModel.lastName.isEmpty &&
-        !authViewModel.roomNumber.isEmpty
+        let fields = [authViewModel.email, authViewModel.password, authViewModel.name, authViewModel.lastName, authViewModel.roomNumber]
+//        !authViewModel.email.isEmpty &&
+//        !authViewModel.password.isEmpty &&
+//        !authViewModel.name.isEmpty &&
+//        !authViewModel.lastName.isEmpty &&
+//        !authViewModel.roomNumber.isEmpty
+        
+        return fields.contains {
+            !$0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        }
     }
     
     var body: some View {
@@ -66,6 +71,7 @@ struct SignUpEmailView: View {
                     Text("Створити обліковий запис")
                         .proceedButton
                 }
+                .disabled(!isFormValid)
             }
             .padding()
             .navigationTitle("Створення акаунту")
