@@ -38,6 +38,17 @@ struct NewNotificationView: View {
                             .padding(.vertical, 3)
                     }
                 }
+                
+                // MARK: - Test data
+                
+                Section {
+                    Button("Upload test data") {
+                        Task {
+                            await NotificationManager.shared.uploadTestingData(from: "TestData")
+                        }
+                    }
+                }
+                
             }
             .navigationTitle("Нове оголошення")
             .toolbar {

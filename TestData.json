@@ -1,0 +1,68 @@
+{
+  "notifications": [
+    {
+      "notificationID": "1A2B3C4D-5E6F-7890-1234-56789ABCDE01",
+      "dormitoryID": "dormitory1",
+      "title": "Monthly Meeting Announcement",
+      "content": "Dear residents, please join us for the monthly dormitory meeting on January 15th at 6:30 PM in the common room. Important updates will be discussed.",
+      "postedBy": "John Doe",
+      "date": "2025-01-01T12:00:00Z"
+    },
+    {
+      "notificationID": "2A2B3C4D-5E6F-7890-1234-56789ABCDE02",
+      "dormitoryID": "dormitory2",
+      "title": "Emergency Water Shutdown",
+      "content": "Attention: Water supply will be temporarily shut down on January 8th from 10 AM to 2 PM for maintenance. Please plan accordingly.",
+      "postedBy": "Олена Іванова",
+      "date": "2025-01-02T14:00:00Z"
+    },
+    {
+      "notificationID": "3A2B3C4D-5E6F-7890-1234-56789ABCDE03",
+      "dormitoryID": "dormitory3",
+      "title": "Fire Drill Notification",
+      "content": "There will be a fire drill conducted on January 10th at 11 AM. Please evacuate promptly when the alarm sounds.",
+      "postedBy": "Michael Smith",
+      "date": "2025-01-03T08:30:00Z"
+    },
+    {
+      "notificationID": "4A2B3C4D-5E6F-7890-1234-56789ABCDE04",
+      "dormitoryID": "dormitory1",
+      "title": "New Laundry Room Rules",
+      "content": "Starting January 5th, all residents must book laundry slots in advance using the dormitory app. No exceptions will be made.",
+      "postedBy": "Іван Петренко",
+      "date": "2025-01-04T10:00:00Z"
+    },
+    {
+      "notificationID": "5A2B3C4D-5E6F-7890-1234-56789ABCDE05",
+      "dormitoryID": "dormitory2",
+      "title": "Community Clean-Up Day",
+      "content": "Join us on January 20th for a community clean-up day around the dormitory premises. Supplies will be provided. Let’s make a difference together!",
+      "postedBy": "Emily Johnson",
+      "date": "2025-01-05T15:45:00Z"
+    },
+    {
+      "notificationID": "6A2B3C4D-5E6F-7890-1234-56789ABCDE06",
+      "dormitoryID": "dormitory3",
+      "title": "Quiet Hours Reminder",
+      "content": "Please remember that quiet hours are from 10 PM to 7 AM. Be considerate of your neighbors during these times. Thank you!",
+      "postedBy": "Андрій Коваленко",
+      "date": "2025-01-06T11:20:00Z"
+    },
+    {
+      "notificationID": "7A2B3C4D-5E6F-7890-1234-56789ABCDE07",
+      "dormitoryID": "dormitory1",
+      "title": "Winter Holiday Decorations",
+      "content": "We invite all residents to help us decorate the common areas for the winter holidays on January 7th at 4 PM. Snacks will be provided!",
+      "postedBy": "Sarah Lee",
+      "date": "2025-01-07T09:10:00Z"
+    },
+    {
+      "notificationID": "8A2B3C4D-5E6F-7890-1234-56789ABCDE08",
+      "dormitoryID": "dormitory2",
+      "title": "Lost and Found Update",
+      "content": "The lost and found box has been updated. Please check it in the reception area if you've misplaced any items recently.",
+      "postedBy": "Оксана Грищенко",
+      "date": "2025-01-08T17:00:00Z"
+    }
+  ]
+}

@@ -65,7 +65,7 @@ final class RequestManager {
     }
 
     // MARK: - Helpers
-    private func convertDateStringToTimestamp(dateString: String) -> Timestamp? {
+    func convertDateStringToTimestamp(dateString: String) -> Timestamp? {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
         if let date = formatter.date(from: dateString) {
