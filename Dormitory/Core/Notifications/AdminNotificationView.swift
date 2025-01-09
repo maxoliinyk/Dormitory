@@ -18,32 +18,26 @@ struct AdminNotificationView: View {
     @State private var showingAdminRequestView = false
     
     var body: some View {
-        ZStack {
-            VStack {
-                ScrollView {
-                    ForEach(notificationViewModel.notifications, id: \.notificationID) { notification in
-                        NotificationRow(
-                            notification: notification,
-                            formattedDate: authViewModel.formatDate(from: notification.date),
-                            isAdmin: true
-                        ) {
-                            Task {
-                                await notificationViewModel.deleteNotification(notificationID: notification.notificationID)
-                            }
-                        }
+        ScrollView {
+            ForEach(notificationViewModel.notifications, id: \.notificationID) { notification in
+                NotificationRow(
+                    notification: notification,
+                    formattedDate: authViewModel.formatDate(from: notification.date),
+                    isAdmin: true
+                ) {
+                    Task {
+                        await notificationViewModel.deleteNotification(notificationID: notification.notificationID)
                     }
                 }
-                .padding()
-                
-                Spacer()
-            }
-            .overlay(alignment: .bottomTrailing) {
-                AddButton {
-                    showingNewNotificationView = true
-                }
+//                .padding(.horizontal)
             }
         }
         .navigationTitle("Оголошення")
+        .overlay(alignment: .bottom) {
+            AddButton {
+                showingNewNotificationView = true
+            }
+        }
         .toolbar {
             ToolbarItemGroup(placement: .topBarTrailing) {
                 Button("Requests", systemImage: "list.bullet") {
@@ -72,7 +66,7 @@ struct AdminNotificationView: View {
             try? await requestViewModel.loadCurrentUser()
             try? await requestViewModel.loadRequests()
         }
-
+        
     }
 }
 

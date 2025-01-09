@@ -11,10 +11,18 @@ struct AddButton: View {
     let action: () -> Void
     
     var body: some View {
-        Button(action: action) {
-            Image(systemName: "plus")
-                .circleButton
+        ZStack {
+            VariableBlurView(maxBlurRadius: 10, direction: .blurredBottomClearTop)
+                .shadow(radius: 5)
+            
+            Button(action: action) {
+                Image(systemName: "plus")
+                    .circleButton
+            }
+            .padding(.vertical)
         }
-        .padding(.horizontal)
+        .ignoresSafeArea()
+        .frame(maxWidth: .infinity)
+        .frame(height: 35)
     }
 }

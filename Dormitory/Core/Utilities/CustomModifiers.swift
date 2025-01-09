@@ -17,6 +17,7 @@ struct CircleButton: ViewModifier {
             .background(Color.blue)
             .clipShape(Circle())
             .shadow(radius: 10)
+            .padding(.bottom)
     }
 }
 

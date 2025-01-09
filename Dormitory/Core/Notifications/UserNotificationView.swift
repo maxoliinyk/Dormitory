@@ -18,7 +18,6 @@ struct UserNotificationView: View {
     var dormitoryID: DormitoryIDs
     
     var body: some View {
-        VStack {
             ScrollView {
                 ForEach(notificationViewModel.notifications.filter { $0.dormitoryID == dormitoryID.rawValue }, id: \.notificationID) { notification in
                     NotificationRow(
@@ -32,10 +31,8 @@ struct UserNotificationView: View {
                     }
                 }
             }
-            .padding()
-        }
         .navigationTitle("Оголошення")
-        .overlay(alignment: .bottomTrailing) {
+        .overlay(alignment: .bottom) {
             AddButton {
                 showingNewRequestView = true
             }
